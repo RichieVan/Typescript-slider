@@ -1,0 +1,29 @@
+.slider {
+  $slider-height: 20px;
+
+  width: 500px;
+  height: $slider-height;
+
+  &__wrapper {
+    position: relative;
+  }
+
+  &__range {
+    $range-height: 14px;
+
+    position: relative;
+    top: calc(($slider-height - $range-height) / 2);
+    width: 100%;
+    height: $range-height;
+    background: red;
+  }
+
+  &__dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: $slider-height;
+    height: $slider-height;
+    background: green;
+  }
+}
