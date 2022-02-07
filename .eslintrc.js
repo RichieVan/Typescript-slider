@@ -7,4 +7,8 @@ module.exports = {
   rules: {
     'func-names': 'off',
   },
+  env: {
+    browser: true,
+    node: true,
+  },
 };
