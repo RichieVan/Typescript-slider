@@ -1,6 +1,6 @@
 interface ISliderModel {
   min: number;
   max: number;
-  current: number;
-  
+  value: number;
 }
+export default ISliderModel;
