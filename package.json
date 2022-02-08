@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode=production",
     "dev": "webpack-dev-server --mode=development",
-    "test": "mocha 'test/*.ts' --require ts-node/register"
+    "test": "mocha 'test/**/*.ts' -r ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "jquery": "^3.6.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.13",
     "@types/mocha": "^9.1.0",
     "chai": "^4.3.6",
     "css-loader": "^6.5.1",
