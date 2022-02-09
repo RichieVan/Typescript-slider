@@ -1,4 +1,5 @@
 import * as $ from 'jquery';
+
 import ISliderDotView from '../../interface/ISliderDotView';
 
 class SliderDotView implements ISliderDotView {
@@ -12,23 +13,23 @@ class SliderDotView implements ISliderDotView {
     
   }
 
-  setActive(state) {
-    this.active = state;
+  setActive(val: boolean) {
+    this.active = val;
   }
 
-  setShift(state) {
-    this.shift = state;
+  setShift(val: number) {
+    this.shift = val;
   }
 
   getRect() {
     return this.element[0].getBoundingClientRect();
   }
 
-  getElement() {
-    return this.element;
-  }
+  // getElement() {
+  //   return this.element;
+  // }
 
-  mouseDownHandler(e) {
+  mouseDownHandler(e: JQuery.MouseDownEvent) {
     this.setActive(true);
     this.setShift(e.offsetX + 8);
   }
@@ -40,22 +41,22 @@ class SliderDotView implements ISliderDotView {
     }
   }
 
-  mouseMoveHandler(e) {
+  mouseMoveHandler(e: JQuery.MouseMoveEvent) {
     if (this.active) {
       const pos = e.clientX - this.shift;
       this.element.css({ left: `${pos}px` });
     }
   }
 
-  renderElement(): JQuery {
+  render(): JQuery {
     const htmlElement = $('<div/>', {
       class: 'slider__dot',
       draggable: false,
     });
 
-    this.element.on('dragstart', () => false);
+    htmlElement.on('dragstart', () => false);
 
-    this.element.on('mousedown', (e) => {
+    htmlElement.on('mousedown', (e: JQuery.MouseDownEvent) => {
       this.mouseDownHandler(e);
     });
 
@@ -63,7 +64,7 @@ class SliderDotView implements ISliderDotView {
       this.mouseUpHandler();
     });
 
-    $(document).on('mousemove', (e) => {
+    $(document).on('mousemove', (e: JQuery.MouseMoveEvent) => {
       if (this.active) {
         this.mouseMoveHandler(e);
       }
