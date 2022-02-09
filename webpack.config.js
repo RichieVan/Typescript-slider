@@ -70,7 +70,7 @@ module.exports = {
     // }),
   ],
   resolve: {
-    extensions: ['.js', '.scss'],
+    extensions: ['.ts', '.js', '.scss'],
     modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
   },
   devServer: {
