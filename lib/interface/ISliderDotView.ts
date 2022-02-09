@@ -2,12 +2,13 @@ interface ISliderDotView {
   element: JQuery;
   active: boolean;
   shift: number;
-  setActive(state: boolean): void;
-  setShift(state: number): void;
-  mouseDownHandler(e: MouseEvent): void;
-  mouseUpHandler(e: MouseEvent): void;
-  mouseMoveHandler(e: MouseEvent): void;
-  renderElement(): JQuery;
+  setActive(val: boolean): void;
+  setShift(val: number): void;
+  getRect(): object;
+  mouseDownHandler(e: JQuery.MouseDownEvent): void;
+  mouseUpHandler(): void;
+  mouseMoveHandler(e: JQuery.MouseMoveEvent): void;
+  render(): JQuery;
 }
 
 export default ISliderDotView;
