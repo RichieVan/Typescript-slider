@@ -1,10 +1,9 @@
-// import Slider from './plugin/class/Slider';
+import SliderPresenter from '../lib/js/presenters/SliderPresenter';
 
-import './plugin/scss/style.scss';
+import '../lib/scss/style.scss';
 
-// const slider = new Slider({
-//   min: 0,
-//   max: 10,
-//   current: 5,
-// });
-// slider.render();
+const slider = new SliderPresenter({
+  min: 0,
+  max: 10,
+  current: 5,
+});
