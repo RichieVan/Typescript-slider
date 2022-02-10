@@ -18,7 +18,7 @@ class SliderView implements ISliderView {
     this.rangeView = new SliderRangeView();
   }
 
-  render() {
+  render(): void {
     const sliderElement = $('<div/>', {
       class: 'slider',
     });
@@ -35,6 +35,10 @@ class SliderView implements ISliderView {
 
     this.element = sliderElement;
     document.body.appendChild(this.element[0]);
+  }
+
+  destroy(): void {
+    this.element.remove();
   }
 }
 
