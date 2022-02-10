@@ -21,7 +21,8 @@
     }
   ],
   "rules": {
-    "func-names": "off"
+    "func-names": "off",
+    "linebreak-style": ["error", "windows"]
   },
   "env": {
     "browser": true,
