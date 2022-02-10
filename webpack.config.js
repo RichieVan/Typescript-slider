@@ -48,26 +48,6 @@ module.exports = {
       favicon: './src/assets/favicon.ico',
       minify: false,
     }),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, 'src/blocks/comment/images'),
-    //       to: path.resolve(__dirname, 'dist/images'),
-    //     },
-    //     {
-    //       from: path.resolve(__dirname, 'src/blocks/catalog-card/images'),
-    //       to: path.resolve(__dirname, 'dist/images'),
-    //     },
-    //     {
-    //       from: path.resolve(__dirname, 'src/blocks/catalog-detailed/images'),
-    //       to: path.resolve(__dirname, 'dist/images'),
-    //     },
-    //     {
-    //       from: path.resolve(__dirname, 'src/blocks/banner-image/images'),
-    //       to: path.resolve(__dirname, 'dist/images'),
-    //     },
-    //   ],
-    // }),
   ],
   resolve: {
     extensions: ['.ts', '.js', '.scss'],
