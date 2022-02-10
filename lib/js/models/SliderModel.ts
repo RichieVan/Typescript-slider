@@ -1,5 +1,5 @@
-import ISliderModel from "../../interface/ISliderModel";
-import SliderProps from "../../type/SliderProps";
+import ISliderModel from '../../interface/ISliderModel';
+import SliderProps from '../../type/SliderProps';
 
 class SliderModel implements ISliderModel {
   min: number;

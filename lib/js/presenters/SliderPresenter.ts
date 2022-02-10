@@ -1,9 +1,9 @@
-import ISliderModel from "../../interface/ISliderModel";
-import ISliderPresenter from "../../interface/ISliderPresenter";
-import SliderProps from "../../type/SliderProps";
-import ISliderView from "../../interface/ISliderView";
-import SliderModel from "../models/SliderModel";
-import SliderView from "../views/SliderView";
+import ISliderModel from '../../interface/ISliderModel';
+import ISliderPresenter from '../../interface/ISliderPresenter';
+import SliderProps from '../../type/SliderProps';
+import ISliderView from '../../interface/ISliderView';
+import SliderModel from '../models/SliderModel';
+import SliderView from '../views/SliderView';
 
 class SliderPresenter implements ISliderPresenter {
   view: ISliderView;

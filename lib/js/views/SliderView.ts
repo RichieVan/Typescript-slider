@@ -1,10 +1,10 @@
 import * as $ from 'jquery';
 
-import ISliderDotView from "../../interface/ISliderDotView";
-import ISliderRangeView from "../../interface/ISliderRangeView";
-import ISliderView from "../../interface/ISliderView";
-import SliderDotView from "./SliderDotView";
-import SliderRangeView from "./SliderRangeView";
+import ISliderDotView from '../../interface/ISliderDotView';
+import ISliderRangeView from '../../interface/ISliderRangeView';
+import ISliderView from '../../interface/ISliderView';
+import SliderDotView from './SliderDotView';
+import SliderRangeView from './SliderRangeView';
 
 class SliderView implements ISliderView {
   element: JQuery<HTMLElement>;

@@ -9,9 +9,8 @@ class SliderDotView implements ISliderDotView {
 
   shift: number;
 
-  constructor() {
-    
-  }
+  // constructor() {
+  // }
 
   setActive(val: boolean) {
     this.active = val;

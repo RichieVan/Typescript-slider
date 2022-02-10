@@ -1,43 +1,44 @@
-import {assert, expect} from "chai";
-import ISliderModel from "../../lib/interface/ISliderModel";
-import SliderProps from "../../lib/type/SliderProps";
+import { expect } from 'chai';
+import ISliderModel from '../../lib/interface/ISliderModel';
+import SliderProps from '../../lib/type/SliderProps';
 import SliderModel from '../../lib/js/models/SliderModel';
 
-type modelInstanceType = null | ISliderModel;
+type ModelInstance = null | ISliderModel;
 
-let modelInstance: modelInstanceType = null;
+let modelInstance: ModelInstance = null;
 
 const SliderModelTests = function () {
-  describe('Тестирование присваивания пропсов', function () {
-    it('Значение min больше чем значение max выдаст ошибку', function () {
+  describe('Тестирование присваивания пропсов', () => {
+    it('Выдать ошибку если значение min больше чем значение max', () => {
       const modelProps: SliderProps = {
         min: 5,
         max: 3,
-        step: 1
+        step: 1,
       };
 
-      const throwableFunction = function(): void {
+      const throwableFunction = function (): ISliderModel {
         modelInstance = new SliderModel(modelProps);
-        console.log(modelInstance);
-      }
+        return modelInstance;
+      };
 
       expect(throwableFunction).to.throw('Минимальное значение не может быть больше максимального');
-    })
+    });
 
-    it('Значение step больше разницы значений min и max выдаст ошибку', function () {
+    it('Выдать ошибку если значение step больше разницы значений min и max', () => {
       const modelProps: SliderProps = {
         min: 3,
         max: 5,
-        step: 3
+        step: 3,
       };
 
-      const throwableFunction = function(): void {
+      const throwableFunction = function (): ISliderModel {
         modelInstance = new SliderModel(modelProps);
-      }
+        return modelInstance;
+      };
 
       expect(throwableFunction).to.throw('Шаг не может быть больше разницы минимального и максимального значения');
-    })
-  })
-}
+    });
+  });
+};
 
 export default SliderModelTests;
