@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode=production",
     "dev": "webpack-dev-server --mode=development",
-    "test": "mocha 'test/**/*.ts' -r ts-node/register"
+    "test": "webpack-dev-server --config test/webpack.config.test.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "jquery": "^3.6.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.0",
     "@types/jquery": "^3.5.13",
     "@types/mocha": "^9.1.0",
     "chai": "^4.3.6",
@@ -34,6 +35,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "fs": "0.0.1-security",
     "html-webpack-plugin": "^5.5.0",
+    "jsdom": "^19.0.0",
     "mocha": "^9.2.0",
     "path": "^0.12.7",
     "sass": "^1.47.0",
