@@ -1,5 +1,8 @@
 module.exports = {
-  extends: ['airbnb'],
+  extends: [
+    'airbnb-base',
+    'airbnb-typescript/base',
+  ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
