@@ -1,11 +1,19 @@
-import ISliderDotView from "./ISliderDotView";
-import ISliderRangeView from "./ISliderRangeView";
+import type ISliderDotView from './ISliderDotView';
+import type ISliderPresenter from './ISliderPresenter';
+import type ISliderRangeView from './ISliderRangeView';
 
 interface ISliderView {
+  container: JQuery;
   element: JQuery;
-  dotView: ISliderDotView;
+  presenter: ISliderPresenter;
+  dots: ISliderDotView[];
   rangeView: ISliderRangeView;
+  setDotPosition(dotIndex: number, pos: number): void;
+  getRect(): DOMRect;
+  getDots(): ISliderDotView[];
+  getSliderWidth(): number;
   destroy(): void;
+  compileElement(): JQuery;
   render(): void;
 }
 
