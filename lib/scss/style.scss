@@ -1,11 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
 .slider {
   $slider-height: 20px;
 
-  width: 500px;
+  display: inline-block;
+  width: 540px;
+  padding: 0 20px;
   height: $slider-height;
 
   &__wrapper {
     position: relative;
+    height: 100%;
   }
 
   &__range {
@@ -22,8 +29,16 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: $slider-height;
+    width: 0;
     height: $slider-height;
     background: green;
+
+    &-content {
+      position: relative;
+      left: -($slider-height / 2);
+      width: $slider-height;
+      height: $slider-height;
+      background: green;
+    }
   }
 }
