@@ -4,6 +4,7 @@ interface ISliderModel {
   step: number;
   values: number[];
   dotsValues: number[];
+  getMin(): number;
   getStep(): number;
   getLength(): number;
   getValues(): number[];
