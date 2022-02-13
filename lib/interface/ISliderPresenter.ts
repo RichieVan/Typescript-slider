@@ -5,7 +5,8 @@ import ISliderDotView from './ISliderDotView';
 interface ISliderPresenter {
   view: ISliderView;
   model: ISliderModel;
-  getClosestDotAndValue(pos: number): number[];
+  getClosestDot(pos: number): number;
+  getClosestPos(pos: number): number;
   convertDOMPosToSliderValue(pos: number): number;
   convertSliderValueToDOMPos(val: number): number;
   destroy(): void;

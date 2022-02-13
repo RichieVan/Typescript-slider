@@ -67,7 +67,9 @@ class SliderDotView implements ISliderDotView {
         pos = sliderWidth;
       }
 
-      this.setPosition(pos);
+      const validPos = this.parentView.presenter.getClosestPos(pos);
+
+      this.setPosition(validPos);
     }
   }
 
