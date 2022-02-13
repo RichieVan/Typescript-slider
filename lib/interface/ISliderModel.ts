@@ -3,8 +3,12 @@ interface ISliderModel {
   max: number;
   step: number;
   values: number[];
+  dotsValues: number[];
   getStep(): number;
-  getLenght(): number;
-  getIndexOfClosestValue(target: number): number;
+  getLength(): number;
+  getValues(): number[];
+  getClosestValue(target: number): number;
+  getClosestDotIndex(target: number): number;
+  calculateValues(): number[];
 }
 export default ISliderModel;

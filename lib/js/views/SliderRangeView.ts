@@ -16,8 +16,8 @@ class SliderRangeView implements ISliderRangeView {
 
   mouseClickHandler(e: JQuery.ClickEvent): void {
     const pos = e.clientX - this.getRect().left;
-    const dotIndex = this.parentView.presenter.getClosestDotIndex(pos);
-    this.parentView.setDotPosition(dotIndex, pos);
+    const [dotIndex, updatedPos] = this.parentView.presenter.getClosestDotAndValue(pos);
+    this.parentView.setDotPosition(dotIndex, updatedPos);
   }
 
   compileElement(): JQuery<HTMLElement> {

@@ -5,5 +5,6 @@ import '../lib/scss/style.scss';
 const slider = new SliderPresenter({
   min: 0,
   max: 10,
-  current: 5,
+  step: 1,
+  // current: 5,
 });

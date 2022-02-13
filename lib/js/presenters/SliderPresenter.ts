@@ -19,17 +19,27 @@ class SliderPresenter implements ISliderPresenter {
     this.view.render();
   }
 
-  getClosestDotIndex(pos: number): number {
+  getClosestDotAndValue(pos: number): number[] {
     const convertedPos = this.convertDOMPosToSliderValue(pos);
-    const closestDotIndex = this.model.getIndexOfClosestValue(convertedPos);
+    const value = this.model.getClosestValue(convertedPos);
+    const dotIndex = this.model.getClosestDotIndex(value);
+    const updatedPos = this.convertSliderValueToDOMPos(value);
 
-    return closestDotIndex;
+    return [dotIndex, updatedPos];
   }
 
   convertDOMPosToSliderValue(pos: number): number {
-    const length = this.model.getLenght();
+    const length = this.model.getLength();
     const sliderWidth = this.view.getSliderWidth();
     const result = pos / (sliderWidth / length);
+
+    return result;
+  }
+
+  convertSliderValueToDOMPos(val: number): number {
+    const length = this.model.getLength();
+    const sliderWidth = this.view.getSliderWidth();
+    const result = (sliderWidth / length) * val;
 
     return result;
   }

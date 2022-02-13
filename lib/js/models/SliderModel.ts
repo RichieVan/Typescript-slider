@@ -1,4 +1,5 @@
 import ISliderModel from '../../interface/ISliderModel';
+import { SliderModelValues } from '../../type/SliderModel';
 import SliderProps from '../../type/SliderProps';
 
 class SliderModel implements ISliderModel {
@@ -10,17 +11,20 @@ class SliderModel implements ISliderModel {
 
   values: number[];
 
+  dotsValues: number[];
+
   constructor(props: SliderProps) {
     this.min = props.min;
     this.max = props.max;
-    this.step = props.step || ((this.max - this.min) / 100);
-    this.values = props.values || [0];
+    this.step = props.step || (this.getLength() / 20);
+    this.values = props.values || this.calculateValues();
+    this.dotsValues = [this.min];
 
     if (this.min >= this.max) {
       throw new Error('Минимальное значение не может быть больше максимального');
     }
 
-    if (this.step > (this.max - this.min)) {
+    if (this.step > this.getLength()) {
       throw new Error('Шаг не может быть больше разницы минимального и максимального значения');
     }
   }
@@ -29,21 +33,55 @@ class SliderModel implements ISliderModel {
     return this.step;
   }
 
-  getLenght(): number {
-    return (this.max - this.min);
+  getLength(): number {
+    const length = this.max - this.min;
+    return length;
   }
 
-  getIndexOfClosestValue(target: number): number {
-    let closestIndex = 0;
-    this.values.reduce((max, value, index) => {
+  getValues(): number[] {
+    return this.values;
+  }
+
+  getClosestValue(target: number): number {
+    let closestVal = 0;
+    this.values.reduce((max, value) => {
       const diff = Math.abs(value - target);
+
+      if (diff <= max) {
+        closestVal = value;
+        return diff;
+      }
+      return max;
+    }, this.getLength());
+    return closestVal;
+  }
+
+  getClosestDotIndex(target: number): number {
+    let closestIndex = 0;
+    this.dotsValues.reduce((max, value, index) => {
+      const diff = Math.abs(value - target);
+
       if (diff <= max) {
         closestIndex = index;
         return diff;
       }
       return max;
-    }, this.max);
+    }, this.getLength());
     return closestIndex;
+  }
+
+  calculateValues(): number[] {
+    const { min, max, step } = this;
+    const values: SliderModelValues = [];
+    const steps = Math.round(this.getLength() / step);
+
+    for (let i = 0; i < steps; i += 1) {
+      const value = Math.round((min + i * step) * 1000) / 1000;
+      values.push(value);
+    }
+    values.push(max);
+
+    return values;
   }
 }
 
