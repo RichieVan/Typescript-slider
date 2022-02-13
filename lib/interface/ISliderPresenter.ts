@@ -1,6 +1,5 @@
 import ISliderView from './ISliderView';
 import ISliderModel from './ISliderModel';
-import ISliderDotView from './ISliderDotView';
 
 interface ISliderPresenter {
   view: ISliderView;
