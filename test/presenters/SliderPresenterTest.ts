@@ -2,9 +2,9 @@ import { assert, expect } from 'chai';
 import ISliderPresenter from '../../lib/interface/ISliderPresenter';
 import SliderPresenter from '../../lib/js/presenters/SliderPresenter';
 
-type PresenterInstance = null | ISliderPresenter;
+type Presenter = null | ISliderPresenter;
 
-let presenter: PresenterInstance = null;
+let presenter: Presenter = null;
 
 const SliderPresenterTests = function () {
   describe('Тесты presenter\'а', () => {
@@ -64,6 +64,24 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 37);
       });
     });
+
+    // describe('Получение индекса ближайшей точки', () => {
+    //   afterEach(() => {
+    //     presenter?.destroy();
+    //     presenter = null;
+    //   });
+
+    //   it('Преобразовать DOM координату 200 в значение слайдера 4', () => {
+    //     const pos = 200;
+    //     presenter = new SliderPresenter({
+    //       min: 0,
+    //       max: 10,
+    //       step: 2,
+    //     });
+
+    //     assert.equal(presenter.convertDOMPosToSliderValue(pos), 4);
+    //   });
+    // });
   });
 };
 
