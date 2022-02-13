@@ -90,6 +90,42 @@ const SliderModelTests = function () {
 
         assert.equal(modelInstance.getClosestValue(2.999), 2);
       });
+
+      it('Вернуть значениe из списка ближайшее к 4', () => {
+        const modelProps: SliderProps = {
+          min: -100,
+          max: 100,
+          step: 1,
+        };
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.equal(modelInstance.getClosestValue(4), 4);
+      });
+
+      it('Вернуть значениe из списка ближайшее к 60', () => {
+        const modelProps: SliderProps = {
+          min: -100,
+          max: 100,
+          step: 1,
+        };
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.equal(modelInstance.getClosestValue(60), 60);
+      });
+
+      it('Вернуть значениe из списка ближайшее к -60', () => {
+        const modelProps: SliderProps = {
+          min: -100,
+          max: 100,
+          step: 1,
+        };
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.equal(modelInstance.getClosestValue(-60), -60);
+      });
     });
 
     describe('Рассчет значений слайдера', () => {
