@@ -61,8 +61,10 @@ class SliderDotView implements ISliderDotView {
         pos = 0;
       }
 
-      if (pos > 500) {
-        pos = 500;
+      const sliderWidth = this.parentView.getSliderWidth();
+
+      if (pos > sliderWidth) {
+        pos = sliderWidth;
       }
 
       this.setPosition(pos);
