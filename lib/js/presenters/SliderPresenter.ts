@@ -51,9 +51,10 @@ class SliderPresenter implements ISliderPresenter {
   convertSliderValueToDOMPos(val: number): number {
     const length = this.model.getLength();
     const sliderWidth = this.view.getSliderWidth();
-    const result = (sliderWidth / length) * (val - this.model.getMin());
+    const pixelPos = (sliderWidth / length) * (val - this.model.getMin());
+    const percentPos = Math.round((pixelPos / sliderWidth) * 100000) / 1000;
 
-    return result;
+    return percentPos;
   }
 
   destroy(): void {

@@ -111,94 +111,94 @@ const SliderPresenterTests = function () {
         presenter = null;
       });
 
-      it('Преобразовать значение слайдера 4 в DOM координату 200', () => {
+      it('Преобразовать значение слайдера 4 в процентную DOM координату 40', () => {
         const val = 4;
         presenter = new SliderPresenter({
           min: 0,
           max: 10,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 200);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 40);
       });
 
-      it('Преобразовать значение слайдера 6 в DOM координату 300', () => {
+      it('Преобразовать значение слайдера 6 в процентную DOM координату 60', () => {
         const val = 6;
         presenter = new SliderPresenter({
           min: 0,
           max: 10,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 300);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 60);
       });
 
-      it('Преобразовать значение слайдера 6.66 в DOM координату 333', () => {
+      it('Преобразовать значение слайдера 6.66 в процентную DOM координату 66.6', () => {
         const val = 6.66;
         presenter = new SliderPresenter({
           min: 0,
           max: 10,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 333);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 66.6);
       });
 
-      it('Преобразовать значение слайдера 13.32 в DOM координату 333', () => {
+      it('Преобразовать значение слайдера 13.32 в процентную DOM координату 66.6', () => {
         const val = 13.32;
         presenter = new SliderPresenter({
           min: 0,
           max: 20,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 333);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 66.6);
       });
 
-      it('Преобразовать значение слайдера 37 в DOM координату 500', () => {
+      it('Преобразовать значение слайдера 37 в процентную DOM координату 100', () => {
         const val = 37;
         presenter = new SliderPresenter({
           min: 0,
           max: 37,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 500);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 100);
       });
 
-      it('Преобразовать значение слайдера 70 в DOM координату 100', () => {
+      it('Преобразовать значение слайдера 70 в процентную DOM координату 20', () => {
         const val = 70;
         presenter = new SliderPresenter({
           min: 50,
           max: 150,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 100);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 20);
       });
 
-      it('Преобразовать значение слайдера 900 в DOM координату 200', () => {
+      it('Преобразовать значение слайдера 900 в процентную DOM координату 40', () => {
         const val = 900;
         presenter = new SliderPresenter({
           min: 500,
           max: 1500,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 200);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 40);
       });
 
-      it('Преобразовать значение слайдера -260 в DOM координату 100', () => {
+      it('Преобразовать значение слайдера -260 в процентную DOM координату 20', () => {
         const val = -260;
         presenter = new SliderPresenter({
           min: -500,
           max: 700,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 100);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 20);
       });
 
-      it('Преобразовать значение слайдера 100 в DOM координату 250', () => {
+      it('Преобразовать значение слайдера 100 в процентную DOM координату 50', () => {
         const val = 100;
         presenter = new SliderPresenter({
           min: -500,
           max: 700,
         });
 
-        assert.equal(presenter.convertSliderValueToDOMPos(val), 250);
+        assert.equal(presenter.convertSliderValueToDOMPos(val), 50);
       });
     });
 

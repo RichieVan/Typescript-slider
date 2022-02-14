@@ -27,7 +27,7 @@ class SliderDotView implements ISliderDotView {
   }
 
   setPosition(pos: number): void {
-    this.element.css({ left: `${pos}px` });
+    this.element.css({ left: `${pos}%` });
   }
 
   getRect(): DOMRect {
