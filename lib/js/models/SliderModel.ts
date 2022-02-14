@@ -20,9 +20,6 @@ class SliderModel implements ISliderModel {
     this.values = props.values || this.calculateValues();
     this.dotsValues = [this.min];
 
-    console.log(this.values);
-    
-
     if (this.min >= this.max) {
       throw new Error('Минимальное значение не может быть больше максимального');
     }
