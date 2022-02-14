@@ -46,6 +46,11 @@ class SliderModel implements ISliderModel {
     return this.values;
   }
 
+  getDivisionsValues(): number[] {
+    const values = this.getValues();
+    return values;
+  }
+
   getClosestValue(target: number): number {
     let closestVal = 0;
     this.values.reduce((max, value) => {

@@ -43,10 +43,28 @@ class DOMHelper {
     return element;
   }
 
-  public static createDivisionsElement(): JQuery<HTMLElement> {
+  public static createDivisionsContainerElement(): JQuery<HTMLElement> {
     const element = $('<div/>', {
       class: 'slider__divisions',
     });
+    return element;
+  }
+
+  public static createDivisionElement(val: number): JQuery<HTMLElement> {
+    const element = $('<div/>', {
+      class: 'slider__division',
+    });
+
+    const marker = $('<div/>', {
+      class: 'slider__division-marker',
+    });
+
+    const value = $('<div/>', {
+      class: 'slider__division-value',
+      html: String(val),
+    });
+
+    element.append([value, marker]);
     return element;
   }
 }

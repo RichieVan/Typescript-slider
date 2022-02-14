@@ -6,6 +6,7 @@ interface ISliderPresenter {
   model: ISliderModel;
   getClosestDot(pos: number): number;
   getClosestPos(pos: number): number;
+  getDivisions(): number[];
   convertDOMPosToSliderValue(pos: number): number;
   convertSliderValueToDOMPos(val: number): number;
   destroy(): void;

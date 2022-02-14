@@ -49,12 +49,18 @@ class SliderView implements ISliderView {
   compileElement(): JQuery<HTMLElement> {
     const sliderWrapper = DOMHelper.createWrapperElement();
 
+    const sliderDivisions = DOMHelper.createDivisionsContainerElement();
+    this.presenter.getDivisions().forEach((val) => {
+      const division = DOMHelper.createDivisionElement(val);
+      sliderDivisions.append(division);
+    });
+
     const sliderControls = DOMHelper.createControlsElement();
     const sliderRange = this.rangeView.render();
     const sliderDots = this.dots.map((dot: ISliderDotView) => dot.getElement());
 
     this.container.append(sliderWrapper);
-    sliderWrapper.append(sliderControls);
+    sliderWrapper.append([sliderDivisions, sliderControls]);
     sliderControls.append([sliderRange, ...sliderDots]);
 
     return sliderWrapper;

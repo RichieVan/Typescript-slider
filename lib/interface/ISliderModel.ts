@@ -10,6 +10,7 @@ interface ISliderModel {
   getValues(): number[];
   getClosestValue(target: number): number;
   getClosestDotIndex(target: number): number;
+  getDivisionsValues(): number[];
   calculateValues(): number[];
 }
 export default ISliderModel;

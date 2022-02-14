@@ -13,8 +13,8 @@ class SliderPresenter implements ISliderPresenter {
   model: ISliderModel;
 
   constructor(props: SliderProps) {
-    this.view = new SliderView(this);
     this.model = new SliderModel(props);
+    this.view = new SliderView(this);
 
     this.view.render();
   }
@@ -33,6 +33,11 @@ class SliderPresenter implements ISliderPresenter {
     const closestPos = this.convertSliderValueToDOMPos(value);
 
     return closestPos;
+  }
+
+  getDivisions(): number[] {
+    const divisions = this.model.getDivisionsValues();
+    return divisions;
   }
 
   convertDOMPosToSliderValue(pos: number): number {
