@@ -7,10 +7,12 @@
   $active-color: rgb(100, 232, 255);
   $progress-color: rgb(157, 244, 255);
   $light-gray-color: rgb(204, 204, 204);
+  $slider-width: 500px;
   $controls-height: 24px;
+  $range-height: 16px;
 
   display: inline-block;
-  width: 540px;
+  width: calc($slider-width + 40px);
   padding: 0 20px;
 
   &__wrapper {
@@ -46,46 +48,29 @@
     height: $controls-height;
   }
 
-  &__range {
-    $range-height: 16px;
-
+  &__range-wrapper {
     position: relative;
     top: calc(($controls-height - $range-height) / 2);
-    width: 100%;
     height: $range-height;
-    border-top: 2px solid $slider-color;
-    border-bottom: 2px solid $slider-color;
+    margin: 0 -8px;
+    border: 2px solid $slider-color;
+    border-radius: 8px;
+  }
+
+  &__range {
+    width: $slider-width;
+    height: 100%;
+    margin: 0 auto;
     background: #fff;
+  }
 
-    &:before {
-      content: '';
-      position: absolute;
-      left: -8px;
-      top: -2px;
-      height: $range-height;
-      width: $range-height;
-      border-top: 2px solid $slider-color;
-      border-bottom: 2px solid $slider-color;
-      border-left: 2px solid $slider-color;
-      border-top-left-radius: 50%;
-      border-bottom-left-radius: 50%;
-      box-sizing: border-box;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      right: -8px;
-      top: -2px;
-      height: $range-height;
-      width: $range-height;
-      border-top: 2px solid $slider-color;
-      border-bottom: 2px solid $slider-color;
-      border-right: 2px solid $slider-color;
-      border-top-right-radius: 50%;
-      border-bottom-right-radius: 50%;
-      box-sizing: border-box;
-    }
+  &__progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: $progress-color;
+    border-radius: 8px;
   }
 
   &__dot {
@@ -94,7 +79,6 @@
     top: 0;
     width: 0;
     height: $controls-height;
-    // transition: left .12s linear;
     cursor: pointer;
 
     &-content {

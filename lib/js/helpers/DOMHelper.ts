@@ -22,11 +22,21 @@ class DOMHelper {
     return element;
   }
 
-  public static createRangeElement(): JQuery<HTMLElement> {
-    const element = $('<div/>', {
+  public static createRangeElement(): JQuery<HTMLElement>[] {
+    const wrapper = $('<div/>', {
+      class: 'slider__range-wrapper',
+    });
+
+    const range = $('<div/>', {
       class: 'slider__range',
     });
-    return element;
+
+    const progress = $('<div/>', {
+      class: 'slider__progress',
+    });
+
+    wrapper.append([range, progress]);
+    return [wrapper, range, progress];
   }
 
   public static createDotElement(): JQuery<HTMLElement> {
@@ -66,6 +76,14 @@ class DOMHelper {
 
     element.append([value, marker]);
     return element;
+  }
+
+  public static getProgressBarEmptyClass(): string {
+    return 'slider__progress_empty';
+  }
+
+  public static getProgressBarFullClass(): string {
+    return 'slider__progress_full';
   }
 }
 

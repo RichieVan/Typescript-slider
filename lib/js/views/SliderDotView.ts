@@ -68,6 +68,7 @@ class SliderDotView implements ISliderDotView {
 
       const validPos = this.parentView.presenter.getClosestPos(pos);
       this.setPosition(validPos);
+      this.parentView.setProgressPosition(validPos);
     }
   }
 

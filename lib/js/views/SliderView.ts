@@ -34,6 +34,10 @@ class SliderView implements ISliderView {
     this.dots[dotIndex].setPosition(pos);
   }
 
+  setProgressPosition(pos: number): void {
+    this.rangeView.setProgress(pos);
+  }
+
   getRect(): DOMRect {
     return this.element[0].getBoundingClientRect();
   }
