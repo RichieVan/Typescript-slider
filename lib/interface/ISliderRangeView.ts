@@ -1,12 +1,11 @@
 import type ISliderView from './ISliderView';
 
 interface ISliderRangeView {
-  element: JQuery;
-  parentView: ISliderView;
-  getRect(): DOMRect;
+  setProgress(pos: number): void;
+  getRangeRect(): DOMRect;
   mouseClickHandler(e: JQuery.ClickEvent): void;
-  compileElement(): JQuery;
-  render(): JQuery;
+  compileElement(): JQuery<HTMLElement>[];
+  render(): JQuery<HTMLElement>;
 }
 
 export default ISliderRangeView;
