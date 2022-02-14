@@ -3,26 +3,89 @@
 }
 
 .slider {
-  $slider-height: 20px;
+  $slider-color: rgb(156, 156, 156);
+  $active-color: rgb(100, 232, 255);
+  $progress-color: rgb(157, 244, 255);
+  $light-gray-color: rgb(204, 204, 204);
+  $controls-height: 24px;
 
   display: inline-block;
   width: 540px;
   padding: 0 20px;
-  height: $slider-height;
 
   &__wrapper {
-    position: relative;
     height: 100%;
   }
 
+  &__divisions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__division {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 2px;
+    margin: 0 -1px;
+
+    &-marker {
+      width: 2px;
+      height: 20px;
+      background: $light-gray-color;
+    }
+
+    &-value {
+      font-size: 14px;
+    }
+  }
+
+  &__controls {
+    position: relative;
+    height: $controls-height;
+  }
+
   &__range {
-    $range-height: 14px;
+    $range-height: 16px;
 
     position: relative;
-    top: calc(($slider-height - $range-height) / 2);
+    top: calc(($controls-height - $range-height) / 2);
     width: 100%;
     height: $range-height;
-    background: red;
+    border-top: 2px solid $slider-color;
+    border-bottom: 2px solid $slider-color;
+    background: #fff;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: -2px;
+      height: $range-height;
+      width: $range-height;
+      border-top: 2px solid $slider-color;
+      border-bottom: 2px solid $slider-color;
+      border-left: 2px solid $slider-color;
+      border-top-left-radius: 50%;
+      border-bottom-left-radius: 50%;
+      box-sizing: border-box;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: -2px;
+      height: $range-height;
+      width: $range-height;
+      border-top: 2px solid $slider-color;
+      border-bottom: 2px solid $slider-color;
+      border-right: 2px solid $slider-color;
+      border-top-right-radius: 50%;
+      border-bottom-right-radius: 50%;
+      box-sizing: border-box;
+    }
   }
 
   &__dot {
@@ -30,15 +93,51 @@
     left: 0;
     top: 0;
     width: 0;
-    height: $slider-height;
-    background: green;
+    height: $controls-height;
+    // transition: left .12s linear;
+    cursor: pointer;
 
     &-content {
+      $shadow-size: 2px;
+      $border-size: 2px;
+      $outline-size: 2px;
+
       position: relative;
-      left: -($slider-height / 2);
-      width: $slider-height;
-      height: $slider-height;
-      background: green;
+      left: calc($controls-height * -1 / 2);
+      width: $controls-height;
+      height: $controls-height;
+      border-radius: 50%;
+      overflow: hidden;
+
+      // &:before {
+      //   content: '';
+      //   position: absolute;
+      //   left: 0;
+      //   top: 0;
+      //   width: $controls-height / 2;
+      //   height: $controls-height;
+      //   background: $progress-color;
+      // }
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: $outline-size;
+        top: $outline-size;
+        width: calc($controls-height - ($outline-size * 2));
+        height: calc($controls-height - ($outline-size * 2));
+        border: $border-size solid #fff;
+        border-radius: 50%;
+        outline: $outline-size solid $slider-color;
+        box-sizing: border-box;
+        box-shadow: 0 0 0 $shadow-size $slider-color inset;
+        background: $progress-color;
+        transition: border-color .1s ease-out;
+      }
+
+      &:hover:after {
+        border-color: $light-gray-color;
+      }
     }
   }
 }
