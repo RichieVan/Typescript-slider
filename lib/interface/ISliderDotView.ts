@@ -15,7 +15,6 @@ interface ISliderDotView {
   mouseDownHandler(e: JQuery.MouseDownEvent): void;
   mouseUpHandler(): void;
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void;
-  compileContent(): JQuery;
   compileElement(content: JQuery): JQuery;
   render(): JQuery;
 }

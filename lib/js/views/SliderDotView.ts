@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 import type ISliderDotView from '../../interface/ISliderDotView';
 import type ISliderView from '../../interface/ISliderView';
+import DOMHelper from '../helpers/DOMHelper';
 
 class SliderDotView implements ISliderDotView {
   public element: JQuery<HTMLElement>;
@@ -13,7 +14,7 @@ class SliderDotView implements ISliderDotView {
   public shift = 0;
 
   constructor(public parentView: ISliderView) {
-    this.content = this.compileContent();
+    this.content = DOMHelper.createDotContentElement();
     this.element = this.compileElement(this.content);
   }
 
@@ -56,40 +57,22 @@ class SliderDotView implements ISliderDotView {
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void {
     if (this.active) {
       let pos = e.clientX - this.shift;
-
       if (pos < 0) {
         pos = 0;
       }
 
       const sliderWidth = this.parentView.getSliderWidth();
-
-      console.log([pos, sliderWidth]);
-      
       if (pos > sliderWidth) {
         pos = sliderWidth;
       }
 
       const validPos = this.parentView.presenter.getClosestPos(pos);
-      console.log(sliderWidth);
-      console.log(pos);
-      console.log(validPos);
-
       this.setPosition(validPos);
     }
   }
 
-  compileContent(): JQuery<HTMLElement> {
-    const content = $('<div/>', {
-      class: 'slider__dot-content',
-    });
-
-    return content;
-  }
-
   compileElement(content: JQuery): JQuery<HTMLElement> {
-    const dot = $('<div/>', {
-      class: 'slider__dot',
-    });
+    const dot = DOMHelper.createDotElement();
 
     dot.on('dragstart', () => false);
 

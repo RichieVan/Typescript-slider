@@ -4,6 +4,7 @@ import type ISliderDotView from '../../interface/ISliderDotView';
 import type ISliderPresenter from '../../interface/ISliderPresenter';
 import type ISliderRangeView from '../../interface/ISliderRangeView';
 import type ISliderView from '../../interface/ISliderView';
+import DOMHelper from '../helpers/DOMHelper';
 import SliderDotView from './SliderDotView';
 import SliderRangeView from './SliderRangeView';
 
@@ -25,9 +26,7 @@ class SliderView implements ISliderView {
     this.rangeView = new SliderRangeView(this);
     this.presenter = presenter;
 
-    this.container = $('<div/>', {
-      class: 'slider',
-    });
+    this.container = DOMHelper.createSliderElement();
     this.element = this.compileElement();
   }
 
@@ -48,15 +47,15 @@ class SliderView implements ISliderView {
   }
 
   compileElement(): JQuery<HTMLElement> {
-    const sliderWrapper = $('<div/>', {
-      class: 'slider__wrapper',
-    });
+    const sliderWrapper = DOMHelper.createWrapperElement();
 
+    const sliderControls = DOMHelper.createControlsElement();
     const sliderRange = this.rangeView.render();
     const sliderDots = this.dots.map((dot: ISliderDotView) => dot.getElement());
 
     this.container.append(sliderWrapper);
-    sliderWrapper.append([sliderRange, ...sliderDots]);
+    sliderWrapper.append(sliderControls);
+    sliderControls.append([sliderRange, ...sliderDots]);
 
     return sliderWrapper;
   }

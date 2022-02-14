@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 import ISliderRangeView from '../../interface/ISliderRangeView';
 import ISliderView from '../../interface/ISliderView';
+import DOMHelper from '../helpers/DOMHelper';
 
 class SliderRangeView implements ISliderRangeView {
   element: JQuery<HTMLElement>;
@@ -22,9 +23,7 @@ class SliderRangeView implements ISliderRangeView {
   }
 
   compileElement(): JQuery<HTMLElement> {
-    const range = $('<div/>', {
-      class: 'slider__range',
-    });
+    const range = DOMHelper.createRangeElement();
 
     range.on('dragstart', () => false);
 
