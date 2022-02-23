@@ -16,8 +16,13 @@ class SliderRangeView implements ISliderRangeView {
   }
 
   setProgress(pos: number): void {
-    if (pos === 0) this.progressBar.addClass(DOMHelper.getProgressBarEmptyClass());
-    if (pos === 100) this.progressBar.addClass(DOMHelper.getProgressBarFullClass());
+    const emptyClass = DOMHelper.getProgressBarEmptyClass();
+    const fullClass = DOMHelper.getProgressBarFullClass();
+
+    this.progressBar.removeClass(`${emptyClass} ${fullClass}`);
+    if (pos === 0) this.progressBar.addClass(emptyClass);
+    if (pos === 100) this.progressBar.addClass(fullClass);
+
     this.progressBar.css({ width: `${pos}%` });
   }
 
@@ -30,6 +35,7 @@ class SliderRangeView implements ISliderRangeView {
     const closestDot = this.parentView.presenter.getClosestDot(pos);
     const closestPos = this.parentView.presenter.getClosestPos(pos);
     this.parentView.setDotPosition(closestDot, closestPos);
+    this.parentView.setProgressPosition(closestPos);
   }
 
   compileElement(): JQuery<HTMLElement>[] {

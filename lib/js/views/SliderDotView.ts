@@ -45,12 +45,14 @@ class SliderDotView implements ISliderDotView {
   mouseDownHandler(e: JQuery.MouseDownEvent): void {
     this.setActive(true);
     this.setShift(e.offsetX + this.parentView.getRect().left - this.getContentShift());
+    this.element.addClass(DOMHelper.getDotActiveClass());
   }
 
   mouseUpHandler(): void {
     if (this.active) {
       this.setActive(false);
       this.setShift(0);
+      this.element.removeClass(DOMHelper.getDotActiveClass());
     }
   }
 

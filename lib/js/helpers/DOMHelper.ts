@@ -27,6 +27,10 @@ class DOMHelper {
       class: 'slider__range-wrapper',
     });
 
+    const inner = $('<div/>', {
+      class: 'slider__range-inner',
+    });
+
     const range = $('<div/>', {
       class: 'slider__range',
     });
@@ -35,7 +39,8 @@ class DOMHelper {
       class: 'slider__progress',
     });
 
-    wrapper.append([range, progress]);
+    inner.append([range, progress]);
+    wrapper.append(inner);
     return [wrapper, range, progress];
   }
 
@@ -84,6 +89,10 @@ class DOMHelper {
 
   public static getProgressBarFullClass(): string {
     return 'slider__progress_full';
+  }
+
+  public static getDotActiveClass(): string {
+    return 'slider__dot_active';
   }
 }
 
