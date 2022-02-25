@@ -94,6 +94,10 @@ class DOMHelper {
   public static getDotActiveClass(): string {
     return 'slider__dot_active';
   }
+
+  public static getDotViewMouseUpEventClass(): string {
+    return 'slider_moving_to_valid';
+  }
 }
 
 export default DOMHelper;

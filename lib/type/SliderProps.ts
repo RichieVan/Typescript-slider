@@ -4,6 +4,7 @@ type SliderProps = {
   step?: number;
   current?: number;
   values?: number[];
+  smooth?: boolean;
 };
 
 export default SliderProps;

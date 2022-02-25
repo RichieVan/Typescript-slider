@@ -4,8 +4,7 @@ import SliderProps from '../../type/SliderProps';
 import ISliderView from '../../interface/ISliderView';
 import SliderModel from '../models/SliderModel';
 import SliderView from '../views/SliderView';
-import ISliderDotView from '../../interface/ISliderDotView';
-import SliderDotView from '../views/SliderDotView';
+import SliderViewProps from '../../type/SliderViewProps';
 
 class SliderPresenter implements ISliderPresenter {
   view: ISliderView;
@@ -38,6 +37,11 @@ class SliderPresenter implements ISliderPresenter {
   getDivisions(): number[] {
     const divisions = this.model.getDivisionsValues();
     return divisions;
+  }
+
+  getViewProps(): SliderViewProps {
+    const viewProps: SliderViewProps = this.model.getViewProps();
+    return viewProps;
   }
 
   convertDOMPosToSliderValue(pos: number): number {

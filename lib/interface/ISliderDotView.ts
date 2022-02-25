@@ -13,7 +13,7 @@ interface ISliderDotView {
   getElement(): JQuery;
   getContentShift(): number;
   mouseDownHandler(e: JQuery.MouseDownEvent): void;
-  mouseUpHandler(): void;
+  mouseUpHandler(e: JQuery.MouseUpEvent): void;
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void;
   compileElement(content: JQuery): JQuery;
   render(): JQuery;

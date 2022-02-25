@@ -1,23 +1,27 @@
 import ISliderModel from '../../interface/ISliderModel';
 import { SliderModelValues } from '../../type/SliderModel';
 import SliderProps from '../../type/SliderProps';
+import SliderViewProps from '../../type/SliderViewProps';
 
 class SliderModel implements ISliderModel {
-  min: number;
+  private min: number;
 
-  max: number;
+  private max: number;
 
-  step: number;
+  private step: number;
 
-  values: number[];
+  private values: number[];
 
-  dotsValues: number[];
+  private dotsValues: number[];
+
+  private smooth: boolean;
 
   constructor(props: SliderProps) {
     this.min = props.min;
     this.max = props.max;
     this.step = props.step || (this.getLength() / 20);
     this.values = props.values || this.calculateValues();
+    this.smooth = props.smooth || false;
     this.dotsValues = [this.min];
 
     if (this.min >= this.max) {
@@ -44,6 +48,13 @@ class SliderModel implements ISliderModel {
 
   getValues(): number[] {
     return this.values;
+  }
+
+  getViewProps(): SliderViewProps {
+    const viewProps: SliderViewProps = {};
+    viewProps.smooth = this.smooth;
+
+    return viewProps;
   }
 
   getDivisionsValues(): number[] {

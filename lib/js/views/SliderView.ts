@@ -9,15 +9,15 @@ import SliderDotView from './SliderDotView';
 import SliderRangeView from './SliderRangeView';
 
 class SliderView implements ISliderView {
-  public container: JQuery<HTMLElement>;
+  private container: JQuery<HTMLElement>;
 
-  public element: JQuery<HTMLElement>;
+  private element: JQuery<HTMLElement>;
 
   public presenter: ISliderPresenter;
 
-  public dots: ISliderDotView[];
+  private dots: ISliderDotView[];
 
-  public rangeView: ISliderRangeView;
+  private rangeView: ISliderRangeView;
 
   constructor(
     presenter: ISliderPresenter,
@@ -36,6 +36,10 @@ class SliderView implements ISliderView {
 
   setProgressPosition(pos: number): void {
     this.rangeView.setProgress(pos);
+  }
+
+  getContainer(): JQuery<HTMLElement> {
+    return this.container;
   }
 
   getRect(): DOMRect {

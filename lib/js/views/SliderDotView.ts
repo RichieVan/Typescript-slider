@@ -48,8 +48,22 @@ class SliderDotView implements ISliderDotView {
     this.element.addClass(DOMHelper.getDotActiveClass());
   }
 
-  mouseUpHandler(): void {
+  mouseUpHandler(e: JQuery.MouseUpEvent): void {
     if (this.active) {
+      const isSmooth = this.parentView.presenter.getViewProps().smooth;
+      if (isSmooth) {
+        const eventClass = DOMHelper.getDotViewMouseUpEventClass();
+        const sliderContainer = this.parentView.getContainer();
+        sliderContainer.addClass(eventClass);
+
+        const pos = e.clientX - this.shift;
+        const validPos = this.parentView.presenter.getClosestPos(pos);
+        this.setPosition(validPos);
+        this.parentView.setProgressPosition(validPos);
+        setTimeout(() => {
+          sliderContainer.removeClass(eventClass);
+        }, 150);
+      }
       this.setActive(false);
       this.setShift(0);
       this.element.removeClass(DOMHelper.getDotActiveClass());
@@ -58,17 +72,37 @@ class SliderDotView implements ISliderDotView {
 
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void {
     if (this.active) {
+      const isSmooth = this.parentView.presenter.getViewProps().smooth;
+      const sliderWidth = this.parentView.getSliderWidth();
       let pos = e.clientX - this.shift;
+      let validPos;
+
       if (pos < 0) {
         pos = 0;
       }
 
-      const sliderWidth = this.parentView.getSliderWidth();
-      if (pos > sliderWidth) {
-        pos = sliderWidth;
+      if (isSmooth) {
+        validPos = ((e.clientX - this.shift) / sliderWidth) * 100;
+
+        if (validPos < 0) {
+          validPos = 0;
+        }
+
+        if (validPos > 100) {
+          validPos = 100;
+        }
+      } else {
+        if (pos < 0) {
+          pos = 0;
+        }
+
+        if (pos > sliderWidth) {
+          pos = sliderWidth;
+        }
+
+        validPos = this.parentView.presenter.getClosestPos(pos);
       }
 
-      const validPos = this.parentView.presenter.getClosestPos(pos);
       this.setPosition(validPos);
       this.parentView.setProgressPosition(validPos);
     }
@@ -83,8 +117,8 @@ class SliderDotView implements ISliderDotView {
       this.mouseDownHandler(e);
     });
 
-    $(document).on('mouseup', () => {
-      this.mouseUpHandler();
+    $(document).on('mouseup', (e: JQuery.MouseUpEvent) => {
+      this.mouseUpHandler(e);
     });
 
     $(document).on('mousemove', (e: JQuery.MouseMoveEvent) => {

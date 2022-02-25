@@ -81,7 +81,7 @@
     border-radius: 8px;
     pointer-events: none;
 
-    &:not(.slider__progress_empty):before {
+    &:before {
       content: '';
       display: block;
       position: absolute;
@@ -90,10 +90,13 @@
       width: 18px;
       height: 100%;
       border-radius: 8px;
+    }
+
+    &:not(.slider__progress_empty):before {
       background: $progress-color;
     }
 
-    .slider__progress_full:after {
+    &:after {
       content: '';
       display: block;
       position: absolute;
@@ -102,6 +105,9 @@
       width: 18px;
       height: 100%;
       border-radius: 8px;
+    }
+
+    &_full:after {
       background: $progress-color;
     }
   }
@@ -126,16 +132,6 @@
       border-radius: 50%;
       overflow: hidden;
 
-      // &:before {
-      //   content: '';
-      //   position: absolute;
-      //   left: 0;
-      //   top: 0;
-      //   width: $controls-height / 2;
-      //   height: $controls-height;
-      //   background: $progress-color;
-      // }
-
       &:after {
         content: '';
         position: absolute;
@@ -151,14 +147,25 @@
         background: $progress-color;
         transition: border-color .1s ease-out;
       }
-
-      // &:hover:after {
-      //   border-color: $light-gray-color;
-      // }
     }
 
     &_active &-content:after {
       border-color: $light-gray-color;
+    }
+  }
+
+  &_moving_to_valid {
+    .slider__dot {
+      transition: left .15s linear;
+    }
+
+    .slider__progress {
+      transition: width .15s linear;
+
+      &:before,
+      &:after {
+        transition: background-color 0s linear .15s;
+      }
     }
   }
 }

@@ -6,6 +6,7 @@ interface ISliderView {
   presenter: ISliderPresenter;
   setDotPosition(dotIndex: number, pos: number): void;
   setProgressPosition(pos: number): void;
+  getContainer(): JQuery<HTMLElement>;
   getRect(): DOMRect;
   getDots(): ISliderDotView[];
   getSliderWidth(): number;

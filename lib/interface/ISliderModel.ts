@@ -1,13 +1,11 @@
+import SliderViewProps from '../type/SliderViewProps';
+
 interface ISliderModel {
-  min: number;
-  max: number;
-  step: number;
-  values: number[];
-  dotsValues: number[];
   getMin(): number;
   getStep(): number;
   getLength(): number;
   getValues(): number[];
+  getViewProps(): SliderViewProps;
   getClosestValue(target: number): number;
   getClosestDotIndex(target: number): number;
   getDivisionsValues(): number[];
