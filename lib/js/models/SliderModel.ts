@@ -16,13 +16,24 @@ class SliderModel implements ISliderModel {
 
   private smooth: boolean;
 
+  private range: boolean;
+
   constructor(props: SliderProps) {
-    this.min = props.min;
-    this.max = props.max;
+    this.min = props.min || 0;
+    this.max = props.max || 10;
     this.step = props.step || (this.getLength() / 20);
     this.values = props.values || this.calculateValues();
     this.smooth = props.smooth || false;
-    this.dotsValues = [this.min];
+    this.range = props.range || false;
+    if (this.range) {
+      if (props.dotsValues) {
+        this.dotsValues = props.dotsValues;
+      } else {
+        this.dotsValues = [this.min, this.max];
+      }
+    } else {
+      this.dotsValues = [this.min];
+    }
 
     if (this.min >= this.max) {
       throw new Error('Минимальное значение не может быть больше максимального');
@@ -31,6 +42,10 @@ class SliderModel implements ISliderModel {
     if (this.step > this.getLength()) {
       throw new Error('Шаг не может быть больше разницы минимального и максимального значения');
     }
+  }
+
+  setDotsValues(dots: number[]): void {
+    this.dotsValues = dots;
   }
 
   getMin(): number {
@@ -51,8 +66,11 @@ class SliderModel implements ISliderModel {
   }
 
   getViewProps(): SliderViewProps {
-    const viewProps: SliderViewProps = {};
-    viewProps.smooth = this.smooth;
+    const viewProps: SliderViewProps = {
+      dots: this.dotsValues,
+      smooth: this.smooth,
+      range: this.range,
+    };
 
     return viewProps;
   }
@@ -60,6 +78,10 @@ class SliderModel implements ISliderModel {
   getDivisionsValues(): number[] {
     const values = this.getValues();
     return values;
+  }
+
+  getDotsValues(): number[] {
+    return this.dotsValues;
   }
 
   getClosestValue(target: number): number {

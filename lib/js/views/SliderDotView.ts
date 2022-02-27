@@ -13,7 +13,10 @@ class SliderDotView implements ISliderDotView {
 
   public shift = 0;
 
-  constructor(public parentView: ISliderView) {
+  constructor(
+    public parentView: ISliderView,
+    private index: number,
+  ) {
     this.content = DOMHelper.createDotContentElement();
     this.element = this.compileElement(this.content);
   }
@@ -56,7 +59,8 @@ class SliderDotView implements ISliderDotView {
         const sliderContainer = this.parentView.getContainer();
         sliderContainer.addClass(eventClass);
 
-        const pos = e.clientX - this.shift;
+        const sliderWidth = this.parentView.getSliderWidth();
+        const pos = ((e.clientX - this.shift) / sliderWidth) * 100;
         const validPos = this.parentView.presenter.getClosestPos(pos);
         this.setPosition(validPos);
         this.parentView.setProgressPosition(validPos);
@@ -74,35 +78,24 @@ class SliderDotView implements ISliderDotView {
     if (this.active) {
       const isSmooth = this.parentView.presenter.getViewProps().smooth;
       const sliderWidth = this.parentView.getSliderWidth();
-      let pos = e.clientX - this.shift;
-      let validPos;
+      let pos = ((e.clientX - this.shift) / sliderWidth) * 100;
 
       if (pos < 0) {
         pos = 0;
       }
 
+      if (pos > 100) {
+        pos = 100;
+      }
+
+      let validPos;
       if (isSmooth) {
-        validPos = ((e.clientX - this.shift) / sliderWidth) * 100;
-
-        if (validPos < 0) {
-          validPos = 0;
-        }
-
-        if (validPos > 100) {
-          validPos = 100;
-        }
+        validPos = pos;
       } else {
-        if (pos < 0) {
-          pos = 0;
-        }
-
-        if (pos > sliderWidth) {
-          pos = sliderWidth;
-        }
-
         validPos = this.parentView.presenter.getClosestPos(pos);
       }
 
+      this.parentView.presenter.updateDotValue(this.index, validPos);
       this.setPosition(validPos);
       this.parentView.setProgressPosition(validPos);
     }

@@ -9,6 +9,8 @@ interface ISliderPresenter {
   getClosestPos(pos: number): number;
   getDivisions(): number[];
   getViewProps(): SliderViewProps;
+  // updateModel(props: object): void;
+  updateDotValue(index: number, pos: number): void;
   convertDOMPosToSliderValue(pos: number): number;
   convertSliderValueToDOMPos(val: number): number;
   destroy(): void;

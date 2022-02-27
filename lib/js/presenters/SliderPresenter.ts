@@ -44,10 +44,24 @@ class SliderPresenter implements ISliderPresenter {
     return viewProps;
   }
 
+  // updateModel(props: SliderProps): void {
+  //   Object.keys(props).forEach((key: string) => {
+  //     if (key === 'dotsValues' && props.dotsValues) this.model.setDots(props.dotsValues);
+  //   });
+  // }
+
+  updateDotValue(index: number, pos: number): void {
+    const modelValues = this.model.getDotsValues();
+    const convertedPos = this.convertDOMPosToSliderValue(pos);
+    const updatedValue = this.model.getClosestValue(convertedPos);
+    modelValues[index] = updatedValue;
+    this.model.setDotsValues(modelValues);
+  }
+
   convertDOMPosToSliderValue(pos: number): number {
     const length = this.model.getLength();
     const sliderWidth = this.view.getSliderWidth();
-    const result = this.model.getMin() + pos / (sliderWidth / length);
+    const result = Math.round((this.model.getMin() + ((sliderWidth / 100) * pos) / (sliderWidth / length)) * 100) / 100;
 
     return result;
   }

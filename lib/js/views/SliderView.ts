@@ -22,7 +22,16 @@ class SliderView implements ISliderView {
   constructor(
     presenter: ISliderPresenter,
   ) {
-    this.dots = [new SliderDotView(this)];
+    const { range, dots } = presenter.getViewProps();
+    if (range) {
+      const dotsList: SliderDotView[] = [];
+      dots.forEach((val, index) => {
+        dotsList.push(new SliderDotView(this, index));
+      });
+      this.dots = dotsList;
+    } else {
+      this.dots = [new SliderDotView(this, 0)];
+    }
     this.rangeView = new SliderRangeView(this);
     this.presenter = presenter;
 
@@ -34,8 +43,11 @@ class SliderView implements ISliderView {
     this.dots[dotIndex].setPosition(pos);
   }
 
-  setProgressPosition(pos: number): void {
-    this.rangeView.setProgress(pos);
+  setProgressPosition(to: number): void;
+  setProgressPosition(to: number, from: number): void;
+  setProgressPosition(to: number, from?: number): void {
+    if (from) this.rangeView.setProgress(to, from);
+    else this.rangeView.setProgress(to);
   }
 
   getContainer(): JQuery<HTMLElement> {
@@ -76,6 +88,12 @@ class SliderView implements ISliderView {
 
   render(): void {
     document.body.appendChild(this.container[0]);
+
+    const { dots } = this.presenter.getViewProps();
+    this.dots.forEach((dot, index) => {
+      const convertedPos = this.presenter.convertSliderValueToDOMPos(dots[index]);
+      dot.setPosition(convertedPos);
+    });
   }
 
   destroy(): void {

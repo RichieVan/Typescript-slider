@@ -5,7 +5,8 @@ import type ISliderRangeView from './ISliderRangeView';
 interface ISliderView {
   presenter: ISliderPresenter;
   setDotPosition(dotIndex: number, pos: number): void;
-  setProgressPosition(pos: number): void;
+  setProgressPosition(to: number): void;
+  setProgressPosition(to: number, from: number): void;
   getContainer(): JQuery<HTMLElement>;
   getRect(): DOMRect;
   getDots(): ISliderDotView[];

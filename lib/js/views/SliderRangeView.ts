@@ -15,15 +15,27 @@ class SliderRangeView implements ISliderRangeView {
     [this.wrapper, this.range, this.progressBar] = this.compileElement();
   }
 
-  setProgress(pos: number): void {
+  setProgress(to: number): void;
+  setProgress(to: number, from: number): void;
+  setProgress(to: number, from?: number): void {
     const emptyClass = DOMHelper.getProgressBarEmptyClass();
     const fullClass = DOMHelper.getProgressBarFullClass();
 
     this.progressBar.removeClass(`${emptyClass} ${fullClass}`);
-    if (pos === 0) this.progressBar.addClass(emptyClass);
-    if (pos === 100) this.progressBar.addClass(fullClass);
+    if (from) {
+      if (from === 0) this.progressBar.addClass(emptyClass);
+      if (to === 100) this.progressBar.addClass(fullClass);
 
-    this.progressBar.css({ width: `${pos}%` });
+      this.progressBar.css({
+        left: `${from}%`,
+        width: `${to - from}%`,
+      });
+    } else {
+      if (to === 0) this.progressBar.addClass(emptyClass);
+      if (to === 100) this.progressBar.addClass(fullClass);
+
+      this.progressBar.css({ width: `${to}%` });
+    }
   }
 
   getRangeRect(): DOMRect {
@@ -31,7 +43,7 @@ class SliderRangeView implements ISliderRangeView {
   }
 
   mouseClickHandler(e: JQuery.ClickEvent): void {
-    const pos = e.clientX - this.getRangeRect().left;
+    const pos = ((e.clientX - this.getRangeRect().left) / this.getRangeRect().width) * 100;
     const closestDot = this.parentView.presenter.getClosestDot(pos);
     const closestPos = this.parentView.presenter.getClosestPos(pos);
     this.parentView.setDotPosition(closestDot, closestPos);
