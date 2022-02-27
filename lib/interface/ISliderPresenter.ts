@@ -5,6 +5,7 @@ import SliderViewProps from '../type/SliderViewProps';
 interface ISliderPresenter {
   view: ISliderView;
   model: ISliderModel;
+  getClosestValue(pos: number): number;
   getClosestDot(pos: number): number;
   getClosestPos(pos: number): number;
   getDivisions(): number[];
