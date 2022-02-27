@@ -14,8 +14,8 @@ const SliderPresenterTests = function () {
         presenter = null;
       });
 
-      it('Преобразовать DOM координату 200 в значение слайдера 4', () => {
-        const pos = 200;
+      it('Преобразовать процентную DOM координату 40 в значение слайдера 4', () => {
+        const pos = 40;
         presenter = new SliderPresenter({
           min: 0,
           max: 10,
@@ -24,8 +24,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 4);
       });
 
-      it('Преобразовать DOM координату 300 в значение слайдера 6', () => {
-        const pos = 300;
+      it('Преобразовать процентную DOM координату 60 в значение слайдера 6', () => {
+        const pos = 60;
         presenter = new SliderPresenter({
           min: 0,
           max: 10,
@@ -34,8 +34,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 6);
       });
 
-      it('Преобразовать DOM координату 333 в значение слайдера 6.66', () => {
-        const pos = 333;
+      it('Преобразовать процентную DOM координату 66.6 в значение слайдера 6.66', () => {
+        const pos = 66.6;
         presenter = new SliderPresenter({
           min: 0,
           max: 10,
@@ -44,8 +44,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 6.66);
       });
 
-      it('Преобразовать DOM координату 333 в значение слайдера 13.32', () => {
-        const pos = 333;
+      it('Преобразовать процентную DOM координату 66.6 в значение слайдера 13.32', () => {
+        const pos = 66.6;
         presenter = new SliderPresenter({
           min: 0,
           max: 20,
@@ -54,8 +54,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 13.32);
       });
 
-      it('Преобразовать DOM координату 500 в значение слайдера 37', () => {
-        const pos = 500;
+      it('Преобразовать процентную DOM координату 100 в значение слайдера 37', () => {
+        const pos = 100;
         presenter = new SliderPresenter({
           min: 0,
           max: 37,
@@ -64,8 +64,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 37);
       });
 
-      it('Преобразовать DOM координату 100 в значение слайдера 70', () => {
-        const pos = 100;
+      it('Преобразовать процентную DOM координату 20 в значение слайдера 70', () => {
+        const pos = 20;
         presenter = new SliderPresenter({
           min: 50,
           max: 150,
@@ -74,8 +74,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 70);
       });
 
-      it('Преобразовать DOM координату 200 в значение слайдера 900', () => {
-        const pos = 200;
+      it('Преобразовать процентную DOM координату 40 в значение слайдера 900', () => {
+        const pos = 40;
         presenter = new SliderPresenter({
           min: 500,
           max: 1500,
@@ -84,8 +84,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), 900);
       });
 
-      it('Преобразовать DOM координату 100 в значение слайдера -260', () => {
-        const pos = 100;
+      it('Преобразовать процентную DOM координату 20 в значение слайдера -260', () => {
+        const pos = 20;
         presenter = new SliderPresenter({
           min: -500,
           max: 700,
@@ -94,8 +94,8 @@ const SliderPresenterTests = function () {
         assert.equal(presenter.convertDOMPosToSliderValue(pos), -260);
       });
 
-      it('Преобразовать DOM координату 250 в значение слайдера 100', () => {
-        const pos = 250;
+      it('Преобразовать процентную DOM координату 50 в значение слайдера 100', () => {
+        const pos = 50;
         presenter = new SliderPresenter({
           min: -500,
           max: 700,
