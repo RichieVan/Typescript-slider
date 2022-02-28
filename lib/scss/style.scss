@@ -149,6 +149,10 @@
       }
     }
 
+    &_active {
+      z-index: 5;
+    }
+
     &_active &-content:after {
       border-color: $light-gray-color;
     }

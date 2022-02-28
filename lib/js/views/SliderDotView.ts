@@ -76,7 +76,7 @@ class SliderDotView implements ISliderDotView {
 
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void {
     if (this.active) {
-      const isSmooth = this.parentView.presenter.getViewProps().smooth;
+      const { smooth, dots } = this.parentView.presenter.getViewProps();
       const sliderWidth = this.parentView.getSliderWidth();
       let pos = ((e.clientX - this.shift) / sliderWidth) * 100;
 
@@ -88,8 +88,19 @@ class SliderDotView implements ISliderDotView {
         pos = 100;
       }
 
+      if (dots.length > 1) {
+        let nextDotPos;
+        if (this.index === 0) {
+          nextDotPos = this.parentView.presenter.convertSliderValueToDOMPos(dots[1]);
+        } else {
+          nextDotPos = this.parentView.presenter.convertSliderValueToDOMPos(dots[0]);
+        }
+
+        if ((this.index === 0 && pos > nextDotPos) || (this.index === 1 && pos < nextDotPos)) pos = nextDotPos;
+      }
+
       let validPos;
-      if (isSmooth) {
+      if (smooth) {
         validPos = pos;
       } else {
         validPos = this.parentView.presenter.getClosestPos(pos);
