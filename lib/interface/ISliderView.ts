@@ -1,3 +1,4 @@
+import ProgressDotData from '../type/ProgressDotData';
 import type ISliderDotView from './ISliderDotView';
 import type ISliderPresenter from './ISliderPresenter';
 import type ISliderRangeView from './ISliderRangeView';
@@ -5,8 +6,7 @@ import type ISliderRangeView from './ISliderRangeView';
 interface ISliderView {
   presenter: ISliderPresenter;
   setDotPosition(dotIndex: number, pos: number): void;
-  setProgressPosition(to: number): void;
-  setProgressPosition(to: number, from: number): void;
+  updateProgressPosition(dotData?: ProgressDotData): void;
   getContainer(): JQuery<HTMLElement>;
   getRect(): DOMRect;
   getDots(): ISliderDotView[];

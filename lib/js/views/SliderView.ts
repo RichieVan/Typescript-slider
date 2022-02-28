@@ -4,6 +4,7 @@ import type ISliderDotView from '../../interface/ISliderDotView';
 import type ISliderPresenter from '../../interface/ISliderPresenter';
 import type ISliderRangeView from '../../interface/ISliderRangeView';
 import type ISliderView from '../../interface/ISliderView';
+import ProgressDotData from '../../type/ProgressDotData';
 import DOMHelper from '../helpers/DOMHelper';
 import SliderDotView from './SliderDotView';
 import SliderRangeView from './SliderRangeView';
@@ -43,11 +44,9 @@ class SliderView implements ISliderView {
     this.dots[dotIndex].setPosition(pos);
   }
 
-  setProgressPosition(to: number): void;
-  setProgressPosition(to: number, from: number): void;
-  setProgressPosition(to: number, from?: number): void {
-    if (from) this.rangeView.setProgress(to, from);
-    else this.rangeView.setProgress(to);
+  updateProgressPosition(dotData?: ProgressDotData): void {
+    if (dotData) this.rangeView.updateProgress(dotData);
+    else this.rangeView.updateProgress();
   }
 
   getContainer(): JQuery<HTMLElement> {
@@ -94,6 +93,7 @@ class SliderView implements ISliderView {
       const convertedPos = this.presenter.convertSliderValueToDOMPos(dots[index]);
       dot.setPosition(convertedPos);
     });
+    this.updateProgressPosition();
   }
 
   destroy(): void {

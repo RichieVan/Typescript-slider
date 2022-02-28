@@ -25,15 +25,11 @@ class SliderModel implements ISliderModel {
     this.values = props.values || this.calculateValues();
     this.smooth = props.smooth || false;
     this.range = props.range || false;
-    if (this.range) {
-      if (props.dotsValues) {
-        this.dotsValues = props.dotsValues;
-      } else {
-        this.dotsValues = [this.min, this.max];
-      }
-    } else {
-      this.dotsValues = [this.min];
-    }
+
+    if (props.dotsValues && this.range) this.dotsValues = props.dotsValues;
+    else if (props.dotsValues) this.dotsValues = [props.dotsValues[0]];
+    else if (this.range) this.dotsValues = [this.min, this.max];
+    else this.dotsValues = [this.min];
 
     if (this.min >= this.max) {
       throw new Error('Минимальное значение не может быть больше максимального');

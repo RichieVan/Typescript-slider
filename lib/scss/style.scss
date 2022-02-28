@@ -160,7 +160,9 @@
     }
 
     .slider__progress {
-      transition: width .15s linear;
+      transition: 
+        width .15s linear,
+        left .15s linear;
 
       &:before,
       &:after {

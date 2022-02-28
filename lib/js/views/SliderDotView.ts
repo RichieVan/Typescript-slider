@@ -63,7 +63,7 @@ class SliderDotView implements ISliderDotView {
         const pos = ((e.clientX - this.shift) / sliderWidth) * 100;
         const validPos = this.parentView.presenter.getClosestPos(pos);
         this.setPosition(validPos);
-        this.parentView.setProgressPosition(validPos);
+        this.parentView.updateProgressPosition();
         setTimeout(() => {
           sliderContainer.removeClass(eventClass);
         }, 150);
@@ -97,7 +97,10 @@ class SliderDotView implements ISliderDotView {
 
       this.parentView.presenter.updateDotValue(this.index, validPos);
       this.setPosition(validPos);
-      this.parentView.setProgressPosition(validPos);
+      this.parentView.updateProgressPosition({
+        index: this.index,
+        pos: validPos,
+      });
     }
   }
 
