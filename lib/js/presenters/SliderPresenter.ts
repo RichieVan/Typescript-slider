@@ -55,12 +55,13 @@ class SliderPresenter implements ISliderPresenter {
   //   });
   // }
 
-  updateDotValue(index: number, pos: number): void {
+  updateDotValue(index: number, pos: number): number {
     const modelValues = this.model.getDotsValues();
     const convertedPos = this.convertDOMPosToSliderValue(pos);
     const updatedValue = this.model.getClosestValue(convertedPos);
     modelValues[index] = updatedValue;
     this.model.setDotsValues(modelValues);
+    return updatedValue;
   }
 
   convertDOMPosToSliderValue(pos: number): number {

@@ -63,8 +63,9 @@ class SliderRangeView implements ISliderRangeView {
     const pos = ((e.clientX - this.getRangeRect().left) / this.getRangeRect().width) * 100;
     const closestDot = this.parentView.presenter.getClosestDot(pos);
     const closestPos = this.parentView.presenter.getClosestPos(pos);
-    this.parentView.presenter.updateDotValue(closestDot, closestPos);
-    this.parentView.setDotPosition(closestDot, closestPos);
+    // this.parentView.presenter.updateDotValue(closestDot, closestPos);
+    // this.parentView.setDotPosition(closestDot, closestPos);
+    this.parentView.updateDot(closestDot, closestPos);
     this.updateProgress();
   }
 

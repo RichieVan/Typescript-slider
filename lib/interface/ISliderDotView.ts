@@ -1,10 +1,6 @@
 import type ISliderView from './ISliderView';
 
 interface ISliderDotView {
-  element: JQuery;
-  content: JQuery;
-  active: boolean;
-  shift: number;
   parentView: ISliderView;
   setActive(val: boolean): void;
   setShift(val: number): void;
@@ -15,6 +11,7 @@ interface ISliderDotView {
   mouseDownHandler(e: JQuery.MouseDownEvent): void;
   mouseUpHandler(e: JQuery.MouseUpEvent): void;
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void;
+  updateMarkValue(val: number): void;
   compileElement(content: JQuery): JQuery;
   render(): JQuery;
 }

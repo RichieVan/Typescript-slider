@@ -48,6 +48,7 @@ class DOMHelper {
     const element = $('<div/>', {
       class: 'slider__dot',
     });
+
     return element;
   }
 
@@ -56,6 +57,24 @@ class DOMHelper {
       class: 'slider__dot-content',
     });
     return element;
+  }
+
+  public static createDotMarkElement(): JQuery<HTMLElement>[] {
+    const element = $('<div/>', {
+      class: 'slider__dot-mark',
+    });
+
+    const value = $('<div/>', {
+      class: 'slider__dot-value',
+    });
+
+    const marker = $('<div/>', {
+      class: 'slider__dot-marker',
+    });
+
+    element.append(value, marker);
+
+    return [element, value];
   }
 
   public static createDivisionsContainerElement(): JQuery<HTMLElement> {

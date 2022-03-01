@@ -18,6 +18,8 @@ class SliderModel implements ISliderModel {
 
   private range: boolean;
 
+  private showThumbValue: boolean;
+
   constructor(props: SliderProps) {
     this.min = props.min || 0;
     this.max = props.max || 10;
@@ -25,6 +27,7 @@ class SliderModel implements ISliderModel {
     this.values = props.values || this.calculateValues();
     this.smooth = props.smooth || false;
     this.range = props.range || false;
+    this.showThumbValue = props.showThumbValue || false;
 
     if (props.dotsValues && this.range) this.dotsValues = props.dotsValues;
     else if (props.dotsValues) this.dotsValues = [props.dotsValues[0]];
@@ -66,6 +69,7 @@ class SliderModel implements ISliderModel {
       dots: this.dotsValues,
       smooth: this.smooth,
       range: this.range,
+      showThumbValue: this.showThumbValue,
     };
 
     return viewProps;

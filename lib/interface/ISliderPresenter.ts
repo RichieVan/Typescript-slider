@@ -11,7 +11,7 @@ interface ISliderPresenter {
   getDivisions(): number[];
   getViewProps(): SliderViewProps;
   // updateModel(props: object): void;
-  updateDotValue(index: number, pos: number): void;
+  updateDotValue(index: number, pos: number): number;
   convertDOMPosToSliderValue(pos: number): number;
   convertSliderValueToDOMPos(val: number): number;
   destroy(): void;

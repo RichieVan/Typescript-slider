@@ -5,13 +5,17 @@ import type ISliderView from '../../interface/ISliderView';
 import DOMHelper from '../helpers/DOMHelper';
 
 class SliderDotView implements ISliderDotView {
-  public element: JQuery<HTMLElement>;
+  private element: JQuery<HTMLElement>;
 
-  content: JQuery<HTMLElement>;
+  private content: JQuery<HTMLElement>;
 
-  public active = false;
+  private markElement: JQuery<HTMLElement> | null = null;
 
-  public shift = 0;
+  private valueElement: JQuery<HTMLElement> | null = null;
+
+  private active = false;
+
+  private shift = 0;
 
   constructor(
     public parentView: ISliderView,
@@ -46,6 +50,7 @@ class SliderDotView implements ISliderDotView {
   }
 
   mouseDownHandler(e: JQuery.MouseDownEvent): void {
+    e.preventDefault();
     this.setActive(true);
     this.setShift(e.offsetX + this.parentView.getRect().left - this.getContentShift());
     this.element.addClass(DOMHelper.getDotActiveClass());
@@ -76,7 +81,8 @@ class SliderDotView implements ISliderDotView {
 
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void {
     if (this.active) {
-      const { smooth, dots } = this.parentView.presenter.getViewProps();
+      e.preventDefault();
+      const { smooth, dots, showThumbValue } = this.parentView.presenter.getViewProps();
       const sliderWidth = this.parentView.getSliderWidth();
       let pos = ((e.clientX - this.shift) / sliderWidth) * 100;
 
@@ -106,13 +112,19 @@ class SliderDotView implements ISliderDotView {
         validPos = this.parentView.presenter.getClosestPos(pos);
       }
 
-      this.parentView.presenter.updateDotValue(this.index, validPos);
-      this.setPosition(validPos);
+      // const updatedValue = this.parentView.presenter.updateDotValue(this.index, validPos);
+      // if (showThumbValue) this.updateMarkValue(updatedValue);
+      // this.setPosition(validPos);
+      this.parentView.updateDot(this.index, validPos);
       this.parentView.updateProgressPosition({
         index: this.index,
         pos: validPos,
       });
     }
+  }
+
+  updateMarkValue(val: number): void {
+    if (this.valueElement) this.valueElement.html(val.toString());
   }
 
   compileElement(content: JQuery): JQuery<HTMLElement> {
@@ -132,6 +144,15 @@ class SliderDotView implements ISliderDotView {
       this.mouseMoveHandler(e);
     });
 
+    const { showThumbValue } = this.parentView.presenter.getViewProps();
+    if (showThumbValue) {
+      const [thumbMarkElement, thumbValueElement] = DOMHelper.createDotMarkElement();
+      this.markElement = thumbMarkElement;
+      this.valueElement = thumbValueElement;
+      const thumbValue = this.parentView.presenter.getViewProps().dots[this.index];
+      this.updateMarkValue(thumbValue);
+      dot.append(this.markElement);
+    }
     dot.append(content);
 
     return dot;

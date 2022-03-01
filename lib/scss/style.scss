@@ -32,6 +32,7 @@
     align-items: center;
     width: 2px;
     margin: 0 -1px;
+    cursor: pointer;
 
     &-marker {
       width: 2px;
@@ -147,6 +148,26 @@
         background: $progress-color;
         transition: border-color .1s ease-out;
       }
+    }
+
+    &-mark {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: -12px;
+      bottom: 100%;
+      width: 24px;
+    }
+
+    &-marker {
+      width: 2px;
+      height: 20px;
+      background: $light-gray-color;
+    }
+
+    &-value {
+      font-size: 14px;
     }
 
     &_active {

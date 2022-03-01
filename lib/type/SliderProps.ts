@@ -7,6 +7,7 @@ type SliderProps = {
   smooth?: boolean;
   range?: boolean;
   dotsValues?: number[];
+  showThumbValue?: boolean;
 };
 
 export default SliderProps;
