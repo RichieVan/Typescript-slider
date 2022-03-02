@@ -178,7 +178,7 @@ const SliderModelTests = function () {
 
         modelInstance = new SliderModel(modelProps);
 
-        assert.equal(modelInstance.getClosestDotIndex(4), 0);
+        assert.equal(modelInstance.getClosestThumbIndex(4), 0);
       });
 
       it('Вернуть индекс точки ближайшей к 0', () => {
@@ -190,7 +190,7 @@ const SliderModelTests = function () {
 
         modelInstance = new SliderModel(modelProps);
 
-        assert.equal(modelInstance.getClosestDotIndex(4), 0);
+        assert.equal(modelInstance.getClosestThumbIndex(4), 0);
       });
 
       it('Вернуть индекс точки ближайшей к 10', () => {
@@ -202,7 +202,7 @@ const SliderModelTests = function () {
 
         modelInstance = new SliderModel(modelProps);
 
-        assert.equal(modelInstance.getClosestDotIndex(4), 0);
+        assert.equal(modelInstance.getClosestThumbIndex(4), 0);
       });
     });
   });

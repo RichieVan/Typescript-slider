@@ -6,7 +6,7 @@ type SliderProps = {
   values?: number[];
   smooth?: boolean;
   range?: boolean;
-  dotsValues?: number[];
+  thumbsValues?: number[];
   showThumbValue?: boolean;
   showMarks?: boolean;
   showMinAndMax?: boolean;

@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 import ISliderRangeView from '../../interface/ISliderRangeView';
 import ISliderView from '../../interface/ISliderView';
-import ProgressDotData from '../../type/ProgressDotData';
+import ProgressThumbData from '../../type/ProgressThumbData';
 import DOMHelper from '../helpers/DOMHelper';
 
 class SliderRangeView implements ISliderRangeView {
@@ -16,18 +16,18 @@ class SliderRangeView implements ISliderRangeView {
     [this.wrapper, this.range, this.progressBar] = this.compileElement();
   }
 
-  updateProgress(dotData?: ProgressDotData): void {
+  updateProgress(thumbData?: ProgressThumbData): void {
     const emptyClass = DOMHelper.getProgressBarEmptyClass();
     const fullClass = DOMHelper.getProgressBarFullClass();
-    const { dots, smooth } = this.parentView.presenter.getViewProps();
+    const { thumbs, smooth } = this.parentView.presenter.getViewProps();
 
-    if (dots.length > 1) {
-      let from = this.parentView.presenter.convertSliderValueToDOMPos(dots[0]);
-      let to = this.parentView.presenter.convertSliderValueToDOMPos(dots[1]);
+    if (thumbs.length > 1) {
+      let from = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[0]);
+      let to = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[1]);
 
-      if (dotData && smooth) {
-        if (dotData.index === 0) from = dotData.pos;
-        if (dotData.index === 1) to = dotData.pos;
+      if (thumbData && smooth) {
+        if (thumbData.index === 0) from = thumbData.pos;
+        if (thumbData.index === 1) to = thumbData.pos;
       }
 
       if (from === 0) this.progressBar.addClass(emptyClass);
@@ -40,10 +40,10 @@ class SliderRangeView implements ISliderRangeView {
         width: `${to - from}%`,
       });
     } else {
-      let to = this.parentView.presenter.convertSliderValueToDOMPos(dots[0]);
+      let to = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[0]);
 
-      if (dotData && smooth) {
-        to = dotData.pos;
+      if (thumbData && smooth) {
+        to = thumbData.pos;
       }
 
       if (to === 0) this.progressBar.addClass(emptyClass);
@@ -61,11 +61,7 @@ class SliderRangeView implements ISliderRangeView {
 
   mouseClickHandler(e: JQuery.ClickEvent): void {
     const pos = ((e.clientX - this.getRangeRect().left) / this.getRangeRect().width) * 100;
-    this.parentView.moveClosestDotToPos(pos);
-    // const closestDot = this.parentView.presenter.getClosestDot(pos);
-    // const closestPos = this.parentView.presenter.getClosestPos(pos);
-    // this.parentView.updateDot(closestDot, closestPos);
-    // this.updateProgress();
+    this.parentView.moveClosestThumbToPos(pos);
   }
 
   compileElement(): JQuery<HTMLElement>[] {

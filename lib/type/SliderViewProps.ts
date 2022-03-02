@@ -1,7 +1,7 @@
 type SliderViewProps = {
   smooth: boolean;
   range: boolean;
-  dots: number[];
+  thumbs: number[];
   showThumbValue: boolean;
   showMarks: boolean;
   showMinAndMax: boolean;

@@ -44,13 +44,13 @@ class DOMHelper {
     return [wrapper, range, progress];
   }
 
-  public static createDotElement(): JQuery<HTMLElement>[] {
+  public static createThumbElement(): JQuery<HTMLElement>[] {
     const element = $('<div/>', {
-      class: 'slider__dot',
+      class: 'slider__thumb',
     });
 
     const wrapper = $('<div/>', {
-      class: 'slider__dot-wrapper',
+      class: 'slider__thumb-wrapper',
     });
 
     element.append(wrapper);
@@ -58,24 +58,24 @@ class DOMHelper {
     return [element, wrapper];
   }
 
-  public static createDotContentElement(): JQuery<HTMLElement> {
+  public static createThumbContentElement(): JQuery<HTMLElement> {
     const element = $('<div/>', {
-      class: 'slider__dot-content',
+      class: 'slider__thumb-content',
     });
     return element;
   }
 
-  public static createDotMarkElement(): JQuery<HTMLElement>[] {
+  public static createThumbMarkElement(): JQuery<HTMLElement>[] {
     const element = $('<div/>', {
-      class: 'slider__dot-mark',
+      class: 'slider__thumb-mark',
     });
 
     const value = $('<div/>', {
-      class: 'slider__dot-value',
+      class: 'slider__thumb-value',
     });
 
     const marker = $('<div/>', {
-      class: 'slider__dot-marker',
+      class: 'slider__thumb-marker',
     });
 
     element.append(value, marker);
@@ -124,16 +124,16 @@ class DOMHelper {
     return 'slider__progress_full';
   }
 
-  public static getDotActiveClass(): string {
-    return 'slider__dot_active';
+  public static getThumbActiveClass(): string {
+    return 'slider__thumb_active';
   }
 
-  public static getDotViewMouseUpEventClass(): string {
+  public static getThumbViewMouseUpEventClass(): string {
     return 'slider_moving_to_valid';
   }
 
-  public static getEnabledDotMarksModifierClass(): string {
-    return 'slider_with_dot-mark';
+  public static getEnabledThumbMarksModifierClass(): string {
+    return 'slider_with_thumb-mark';
   }
 }
 

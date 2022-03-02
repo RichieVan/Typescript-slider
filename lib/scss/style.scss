@@ -57,7 +57,7 @@
     margin-top: 0;
   }
 
-  &_with_dot-mark &__controls {
+  &_with_thumb-mark &__controls {
     margin-top: 36px;
   }
 
@@ -124,7 +124,7 @@
     }
   }
 
-  &__dot {
+  &__thumb {
     position: absolute;
     left: 0;
     top: 0;
@@ -197,7 +197,7 @@
   }
 
   &_moving_to_valid {
-    .slider__dot {
+    .slider__thumb {
       transition: left .15s linear;
     }
 

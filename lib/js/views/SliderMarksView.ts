@@ -14,7 +14,7 @@ class SliderMarksView implements ISliderMarksView {
 
   private mouseClickHandler(value: number): void {
     const pos = this.parentView.presenter.convertSliderValueToDOMPos(value);
-    this.parentView.moveClosestDotToPos(pos);
+    this.parentView.moveClosestThumbToPos(pos);
   }
 
   compile(data: number[]) {

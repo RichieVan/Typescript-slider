@@ -1,18 +1,18 @@
 import { assert } from 'chai';
 
-import type ISliderDotView from '../../lib/interface/ISliderDotView';
-import SliderDotView from '../../lib/js/views/SliderDotView';
+import type ISliderThumbView from '../../lib/interface/ISliderThumbView';
+import SliderThumbView from '../../lib/js/views/SliderThumbView';
 
-type SliderDot = null | ISliderDotView;
+type SliderThumb = null | ISliderThumbView;
 
-const presenter: SliderDot = null;
+const presenter: SliderThumb = null;
 
-describe('SliderDotView tests', () => {
+describe('SliderThumbView tests', () => {
   describe('Первый тест', () => {
     // it('Сабтест', () => {
-    //   const sliderDotView = new SliderDotView();
+    //   const sliderThumbView = new SliderThumbView();
       
-    //   assert.equal(sliderDotView.getElement().dispatchElevt, 'hello');
+    //   assert.equal(sliderThumbView.getElement().dispatchElevt, 'hello');
     // });
   });
 });

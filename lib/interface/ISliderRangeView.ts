@@ -1,8 +1,8 @@
-import ProgressDotData from '../type/ProgressDotData';
+import ProgressThumbData from '../type/ProgressThumbData';
 import type ISliderView from './ISliderView';
 
 interface ISliderRangeView {
-  updateProgress(dotData?: ProgressDotData): void;
+  updateProgress(thumbData?: ProgressThumbData): void;
   getRangeRect(): DOMRect;
   mouseClickHandler(e: JQuery.ClickEvent): void;
   compileElement(): JQuery<HTMLElement>[];

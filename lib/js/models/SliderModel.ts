@@ -12,7 +12,7 @@ class SliderModel implements ISliderModel {
 
   private values: number[];
 
-  private dotsValues: number[];
+  private thumbsValues: number[];
 
   private smooth: boolean;
 
@@ -35,10 +35,10 @@ class SliderModel implements ISliderModel {
     this.showMarks = props.showMarks || false;
     this.showMinAndMax = props.showMinAndMax || false;
 
-    if (props.dotsValues && this.range) this.dotsValues = props.dotsValues;
-    else if (props.dotsValues) this.dotsValues = [props.dotsValues[0]];
-    else if (this.range) this.dotsValues = [this.min, this.max];
-    else this.dotsValues = [this.min];
+    if (props.thumbsValues && this.range) this.thumbsValues = props.thumbsValues;
+    else if (props.thumbsValues) this.thumbsValues = [props.thumbsValues[0]];
+    else if (this.range) this.thumbsValues = [this.min, this.max];
+    else this.thumbsValues = [this.min];
 
     if (this.min >= this.max) {
       throw new Error('Минимальное значение не может быть больше максимального');
@@ -49,8 +49,8 @@ class SliderModel implements ISliderModel {
     }
   }
 
-  setDotsValues(dots: number[]): void {
-    this.dotsValues = dots;
+  setThumbsValues(thumbs: number[]): void {
+    this.thumbsValues = thumbs;
   }
 
   getMin(): number {
@@ -72,7 +72,7 @@ class SliderModel implements ISliderModel {
 
   getViewProps(): SliderViewProps {
     const viewProps: SliderViewProps = {
-      dots: this.dotsValues,
+      thumbs: this.thumbsValues,
       smooth: this.smooth,
       range: this.range,
       showThumbValue: this.showThumbValue,
@@ -88,8 +88,8 @@ class SliderModel implements ISliderModel {
     return values;
   }
 
-  getDotsValues(): number[] {
-    return this.dotsValues;
+  getThumbsValues(): number[] {
+    return this.thumbsValues;
   }
 
   getClosestValue(target: number): number {
@@ -106,9 +106,9 @@ class SliderModel implements ISliderModel {
     return closestVal;
   }
 
-  getClosestDotIndex(target: number): number {
+  getClosestThumbIndex(target: number): number {
     let closestIndex = 0;
-    this.dotsValues.reduce((max, value, index) => {
+    this.thumbsValues.reduce((max, value, index) => {
       const diff = Math.abs(value - target);
 
       if (diff <= max) {

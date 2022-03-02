@@ -6,12 +6,12 @@ interface ISliderPresenter {
   view: ISliderView;
   model: ISliderModel;
   getClosestValue(pos: number): number;
-  getClosestDot(pos: number): number;
+  getClosestThumb(pos: number): number;
   getClosestPos(pos: number): number;
   getDivisions(): number[];
   getViewProps(): SliderViewProps;
   // updateModel(props: object): void;
-  updateDotValue(index: number, pos: number): number;
+  updateThumbValue(index: number, pos: number): number;
   convertDOMPosToSliderValue(pos: number): number;
   convertSliderValueToDOMPos(val: number): number;
   destroy(): void;

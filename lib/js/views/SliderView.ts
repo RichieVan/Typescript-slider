@@ -1,13 +1,13 @@
 import $ from 'jquery';
 
-import type ISliderDotView from '../../interface/ISliderDotView';
+import type ISliderThumbView from '../../interface/ISliderThumbView';
 import ISliderMarksView from '../../interface/ISliderMarksView';
 import type ISliderPresenter from '../../interface/ISliderPresenter';
 import type ISliderRangeView from '../../interface/ISliderRangeView';
 import type ISliderView from '../../interface/ISliderView';
-import ProgressDotData from '../../type/ProgressDotData';
+import ProgressThumbData from '../../type/ProgressThumbData';
 import DOMHelper from '../helpers/DOMHelper';
-import SliderDotView from './SliderDotView';
+import SliderThumbView from './SliderThumbView';
 import SliderMarksView from './SliderMarksView';
 import SliderRangeView from './SliderRangeView';
 
@@ -18,7 +18,7 @@ class SliderView implements ISliderView {
 
   public presenter: ISliderPresenter;
 
-  private dots: ISliderDotView[];
+  private thumbs: ISliderThumbView[];
 
   private rangeView: ISliderRangeView;
 
@@ -29,15 +29,15 @@ class SliderView implements ISliderView {
   ) {
     this.presenter = presenter;
 
-    const { range, dots } = presenter.getViewProps();
+    const { range, thumbs } = presenter.getViewProps();
     if (range) {
-      const dotsList: SliderDotView[] = [];
-      dots.forEach((val, index) => {
-        dotsList.push(new SliderDotView(this, index));
+      const thumbsList: SliderThumbView[] = [];
+      thumbs.forEach((val, index) => {
+        thumbsList.push(new SliderThumbView(this, index));
       });
-      this.dots = dotsList;
+      this.thumbs = thumbsList;
     } else {
-      this.dots = [new SliderDotView(this, 0)];
+      this.thumbs = [new SliderThumbView(this, 0)];
     }
     this.rangeView = new SliderRangeView(this);
 
@@ -45,12 +45,12 @@ class SliderView implements ISliderView {
     this.element = this.compileElement();
   }
 
-  setDotPosition(dotIndex: number, pos: number): void {
-    this.dots[dotIndex].setPosition(pos);
+  setThumbPosition(thumbIndex: number, pos: number): void {
+    this.thumbs[thumbIndex].setPosition(pos);
   }
 
   setSmoothClass(): void {
-    const eventClass = DOMHelper.getDotViewMouseUpEventClass();
+    const eventClass = DOMHelper.getThumbViewMouseUpEventClass();
     const container = this.getContainer();
     container.addClass(eventClass);
     setTimeout(() => {
@@ -66,33 +66,33 @@ class SliderView implements ISliderView {
     return this.element[0].getBoundingClientRect();
   }
 
-  getDots(): ISliderDotView[] {
-    return this.dots;
+  getThumbs(): ISliderThumbView[] {
+    return this.thumbs;
   }
 
   getSliderWidth(): number {
     return this.getRect().width;
   }
 
-  updateProgressPosition(dotData?: ProgressDotData): void {
-    if (dotData) this.rangeView.updateProgress(dotData);
+  updateProgressPosition(thumbData?: ProgressThumbData): void {
+    if (thumbData) this.rangeView.updateProgress(thumbData);
     else this.rangeView.updateProgress();
   }
 
-  updateDot(index: number, pos: number): void {
-    const dot = this.dots[index];
-    dot.setPosition(pos);
+  updateThumb(index: number, pos: number): void {
+    const thumb = this.thumbs[index];
+    thumb.setPosition(pos);
     const { showThumbValue } = this.presenter.getViewProps();
-    const updatedValue = this.presenter.updateDotValue(index, pos);
-    if (showThumbValue) dot.updateMarkValue(updatedValue);
+    const updatedValue = this.presenter.updateThumbValue(index, pos);
+    if (showThumbValue) thumb.updateMarkValue(updatedValue);
   }
 
-  moveClosestDotToPos(pos: number): void {
+  moveClosestThumbToPos(pos: number): void {
     const { smooth } = this.presenter.getViewProps();
     if (smooth) this.setSmoothClass();
-    const closestDot = this.presenter.getClosestDot(pos);
+    const closestThumb = this.presenter.getClosestThumb(pos);
     const closestPos = this.presenter.getClosestPos(pos);
-    this.updateDot(closestDot, closestPos);
+    this.updateThumb(closestThumb, closestPos);
     this.rangeView.updateProgress();
   }
 
@@ -103,7 +103,7 @@ class SliderView implements ISliderView {
 
     const sliderControls = DOMHelper.createControlsElement();
     const sliderRange = this.rangeView.render();
-    const sliderDots = this.dots.map((dot: ISliderDotView) => dot.getElement());
+    const sliderThumbs = this.thumbs.map((thumb: ISliderThumbView) => thumb.getElement());
 
     this.container.append(sliderWrapper);
     if (showMarks) {
@@ -116,10 +116,10 @@ class SliderView implements ISliderView {
       sliderWrapper.append(this.marksView.render());
     }
     sliderWrapper.append(sliderControls);
-    sliderControls.append([sliderRange, ...sliderDots]);
+    sliderControls.append([sliderRange, ...sliderThumbs]);
 
     if (showThumbValue && !showMarks && !showMinAndMax) {
-      this.container.addClass(DOMHelper.getEnabledDotMarksModifierClass());
+      this.container.addClass(DOMHelper.getEnabledThumbMarksModifierClass());
     }
 
     return sliderWrapper;
@@ -128,10 +128,10 @@ class SliderView implements ISliderView {
   render(): void {
     document.body.appendChild(this.container[0]);
 
-    const { dots } = this.presenter.getViewProps();
-    this.dots.forEach((dot, index) => {
-      const convertedPos = this.presenter.convertSliderValueToDOMPos(dots[index]);
-      dot.setPosition(convertedPos);
+    const { thumbs } = this.presenter.getViewProps();
+    this.thumbs.forEach((thumb, index) => {
+      const convertedPos = this.presenter.convertSliderValueToDOMPos(thumbs[index]);
+      thumb.setPosition(convertedPos);
     });
     this.updateProgressPosition();
   }

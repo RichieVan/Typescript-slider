@@ -1,19 +1,19 @@
-import ProgressDotData from '../type/ProgressDotData';
-import type ISliderDotView from './ISliderDotView';
+import ProgressThumbData from '../type/ProgressThumbData';
+import type ISliderThumbView from './ISliderThumbView';
 import type ISliderPresenter from './ISliderPresenter';
 import type ISliderRangeView from './ISliderRangeView';
 
 interface ISliderView {
   presenter: ISliderPresenter;
-  setDotPosition(dotIndex: number, pos: number): void;
+  setThumbPosition(thumbIndex: number, pos: number): void;
   setSmoothClass(): void;
   getContainer(): JQuery<HTMLElement>;
   getRect(): DOMRect;
-  getDots(): ISliderDotView[];
+  getThumbs(): ISliderThumbView[];
   getSliderWidth(): number;
-  updateProgressPosition(dotData?: ProgressDotData): void;
-  updateDot(index: number, pos: number): void;
-  moveClosestDotToPos(pos: number): void;
+  updateProgressPosition(thumbData?: ProgressThumbData): void;
+  updateThumb(index: number, pos: number): void;
+  moveClosestThumbToPos(pos: number): void;
   compileElement(): JQuery;
   render(): void;
   destroy(): void;

@@ -1,6 +1,6 @@
 import type ISliderView from './ISliderView';
 
-interface ISliderDotView {
+interface ISliderThumbView {
   parentView: ISliderView;
   setActive(val: boolean): void;
   setShift(val: number): void;
@@ -16,4 +16,4 @@ interface ISliderDotView {
   render(): JQuery;
 }
 
-export default ISliderDotView;
+export default ISliderThumbView;

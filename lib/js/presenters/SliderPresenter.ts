@@ -25,11 +25,11 @@ class SliderPresenter implements ISliderPresenter {
     return value;
   }
 
-  getClosestDot(pos: number): number {
+  getClosestThumb(pos: number): number {
     const value = this.getClosestValue(pos);
-    const dotIndex = this.model.getClosestDotIndex(value);
+    const thumbIndex = this.model.getClosestThumbIndex(value);
 
-    return dotIndex;
+    return thumbIndex;
   }
 
   getClosestPos(pos: number): number {
@@ -51,16 +51,16 @@ class SliderPresenter implements ISliderPresenter {
 
   // updateModel(props: SliderProps): void {
   //   Object.keys(props).forEach((key: string) => {
-  //     if (key === 'dotsValues' && props.dotsValues) this.model.setDots(props.dotsValues);
+  //     if (key === 'thumbsValues' && props.thumbsValues) this.model.setThumbs(props.thumbsValues);
   //   });
   // }
 
-  updateDotValue(index: number, pos: number): number {
-    const modelValues = this.model.getDotsValues();
+  updateThumbValue(index: number, pos: number): number {
+    const modelValues = this.model.getThumbsValues();
     const convertedPos = this.convertDOMPosToSliderValue(pos);
     const updatedValue = this.model.getClosestValue(convertedPos);
     modelValues[index] = updatedValue;
-    this.model.setDotsValues(modelValues);
+    this.model.setThumbsValues(modelValues);
     return updatedValue;
   }
 
