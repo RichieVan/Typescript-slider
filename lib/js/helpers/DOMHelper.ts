@@ -44,12 +44,18 @@ class DOMHelper {
     return [wrapper, range, progress];
   }
 
-  public static createDotElement(): JQuery<HTMLElement> {
+  public static createDotElement(): JQuery<HTMLElement>[] {
     const element = $('<div/>', {
       class: 'slider__dot',
     });
 
-    return element;
+    const wrapper = $('<div/>', {
+      class: 'slider__dot-wrapper',
+    });
+
+    element.append(wrapper);
+
+    return [element, wrapper];
   }
 
   public static createDotContentElement(): JQuery<HTMLElement> {
@@ -116,6 +122,10 @@ class DOMHelper {
 
   public static getDotViewMouseUpEventClass(): string {
     return 'slider_moving_to_valid';
+  }
+
+  public static getEnabledDotMarksModifierClass(): string {
+    return 'slider_with_dot-mark';
   }
 }
 

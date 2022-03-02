@@ -77,19 +77,35 @@ class SliderView implements ISliderView {
   compileElement(): JQuery<HTMLElement> {
     const sliderWrapper = DOMHelper.createWrapperElement();
 
-    const sliderDivisions = DOMHelper.createDivisionsContainerElement();
-    this.presenter.getDivisions().forEach((val) => {
-      const division = DOMHelper.createDivisionElement(val);
-      sliderDivisions.append(division);
-    });
+    const { showMarks, showThumbValue, showMinAndMax } = this.presenter.getViewProps();
 
     const sliderControls = DOMHelper.createControlsElement();
     const sliderRange = this.rangeView.render();
     const sliderDots = this.dots.map((dot: ISliderDotView) => dot.getElement());
 
     this.container.append(sliderWrapper);
-    sliderWrapper.append([sliderDivisions, sliderControls]);
+    if (showMarks) {
+      const sliderDivisions = DOMHelper.createDivisionsContainerElement();
+      this.presenter.getDivisions().forEach((val) => {
+        const division = DOMHelper.createDivisionElement(val);
+        sliderDivisions.append(division);
+      });
+      sliderWrapper.append(sliderDivisions);
+    }
+    if (showMinAndMax) {
+      const sliderDivisions = DOMHelper.createDivisionsContainerElement();
+      const marks = this.presenter.getDivisions();
+      const validMarks = [marks[0], marks[marks.length - 1]];
+      validMarks.forEach((val) => {
+        const division = DOMHelper.createDivisionElement(val);
+        sliderDivisions.append(division);
+      });
+      sliderWrapper.append(sliderDivisions);
+    }
+    sliderWrapper.append(sliderControls);
     sliderControls.append([sliderRange, ...sliderDots]);
+
+    if (showThumbValue && !showMarks && !showMinAndMax) this.container.addClass(DOMHelper.getEnabledDotMarksModifierClass());
 
     return sliderWrapper;
   }

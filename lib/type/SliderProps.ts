@@ -8,6 +8,8 @@ type SliderProps = {
   range?: boolean;
   dotsValues?: number[];
   showThumbValue?: boolean;
+  showMarks?: boolean;
+  showMinAndMax?: boolean;
 };
 
 export default SliderProps;

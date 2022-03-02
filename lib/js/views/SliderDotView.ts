@@ -102,7 +102,12 @@ class SliderDotView implements ISliderDotView {
           nextDotPos = this.parentView.presenter.convertSliderValueToDOMPos(dots[0]);
         }
 
-        if ((this.index === 0 && pos > nextDotPos) || (this.index === 1 && pos < nextDotPos)) pos = nextDotPos;
+        if (
+          (this.index === 0 && pos > nextDotPos)
+          || (this.index === 1 && pos < nextDotPos)
+        ) {
+          pos = nextDotPos;
+        }
       }
 
       let validPos;
@@ -128,11 +133,11 @@ class SliderDotView implements ISliderDotView {
   }
 
   compileElement(content: JQuery): JQuery<HTMLElement> {
-    const dot = DOMHelper.createDotElement();
+    const [element, wrapper] = DOMHelper.createDotElement();
 
-    dot.on('dragstart', () => false);
+    element.on('dragstart', () => false);
 
-    dot.on('mousedown', (e: JQuery.MouseDownEvent) => {
+    element.on('mousedown', (e: JQuery.MouseDownEvent) => {
       this.mouseDownHandler(e);
     });
 
@@ -151,11 +156,11 @@ class SliderDotView implements ISliderDotView {
       this.valueElement = thumbValueElement;
       const thumbValue = this.parentView.presenter.getViewProps().dots[this.index];
       this.updateMarkValue(thumbValue);
-      dot.append(this.markElement);
+      wrapper.append(this.markElement);
     }
-    dot.append(content);
+    wrapper.append(content);
 
-    return dot;
+    return element;
   }
 
   render(): JQuery {

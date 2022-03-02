@@ -48,6 +48,11 @@
   &__controls {
     position: relative;
     height: $controls-height;
+    margin-top: 0;
+  }
+
+  &_with_dot-mark &__controls {
+    margin-top: 36px;
   }
 
   &__range-wrapper {
@@ -150,6 +155,12 @@
       }
     }
 
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
     &-mark {
       display: flex;
       flex-direction: column;
@@ -163,7 +174,7 @@
     &-marker {
       width: 2px;
       height: 20px;
-      background: $light-gray-color;
+      background: $slider-color;
     }
 
     &-value {
