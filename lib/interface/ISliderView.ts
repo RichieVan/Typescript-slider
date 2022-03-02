@@ -6,15 +6,17 @@ import type ISliderRangeView from './ISliderRangeView';
 interface ISliderView {
   presenter: ISliderPresenter;
   setDotPosition(dotIndex: number, pos: number): void;
-  updateProgressPosition(dotData?: ProgressDotData): void;
-  updateDot(index: number, pos: number): void;
+  setSmoothClass(): void;
   getContainer(): JQuery<HTMLElement>;
   getRect(): DOMRect;
   getDots(): ISliderDotView[];
   getSliderWidth(): number;
-  destroy(): void;
+  updateProgressPosition(dotData?: ProgressDotData): void;
+  updateDot(index: number, pos: number): void;
+  moveClosestDotToPos(pos: number): void;
   compileElement(): JQuery;
   render(): void;
+  destroy(): void;
 }
 
 export default ISliderView;

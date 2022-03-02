@@ -87,6 +87,7 @@ class DOMHelper {
     const element = $('<div/>', {
       class: 'slider__divisions',
     });
+
     return element;
   }
 
@@ -94,6 +95,12 @@ class DOMHelper {
     const element = $('<div/>', {
       class: 'slider__division',
     });
+
+    const wrapper = $('<div/>', {
+      class: 'slider__division-wrapper',
+    });
+
+    element.append(wrapper);
 
     const marker = $('<div/>', {
       class: 'slider__division-marker',
@@ -104,7 +111,8 @@ class DOMHelper {
       html: String(val),
     });
 
-    element.append([value, marker]);
+    element.append(wrapper);
+    wrapper.append(value, marker);
     return element;
   }
 

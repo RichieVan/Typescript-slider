@@ -1,12 +1,14 @@
 import $ from 'jquery';
 
 import type ISliderDotView from '../../interface/ISliderDotView';
+import ISliderMarksView from '../../interface/ISliderMarksView';
 import type ISliderPresenter from '../../interface/ISliderPresenter';
 import type ISliderRangeView from '../../interface/ISliderRangeView';
 import type ISliderView from '../../interface/ISliderView';
 import ProgressDotData from '../../type/ProgressDotData';
 import DOMHelper from '../helpers/DOMHelper';
 import SliderDotView from './SliderDotView';
+import SliderMarksView from './SliderMarksView';
 import SliderRangeView from './SliderRangeView';
 
 class SliderView implements ISliderView {
@@ -19,6 +21,8 @@ class SliderView implements ISliderView {
   private dots: ISliderDotView[];
 
   private rangeView: ISliderRangeView;
+
+  private marksView: ISliderMarksView | null = null;
 
   constructor(
     presenter: ISliderPresenter,
@@ -45,17 +49,13 @@ class SliderView implements ISliderView {
     this.dots[dotIndex].setPosition(pos);
   }
 
-  updateProgressPosition(dotData?: ProgressDotData): void {
-    if (dotData) this.rangeView.updateProgress(dotData);
-    else this.rangeView.updateProgress();
-  }
-
-  updateDot(index: number, pos: number): void {
-    const dot = this.dots[index];
-    dot.setPosition(pos);
-    const { showThumbValue } = this.presenter.getViewProps();
-    const updatedValue = this.presenter.updateDotValue(index, pos);
-    if (showThumbValue) dot.updateMarkValue(updatedValue);
+  setSmoothClass(): void {
+    const eventClass = DOMHelper.getDotViewMouseUpEventClass();
+    const container = this.getContainer();
+    container.addClass(eventClass);
+    setTimeout(() => {
+      container.removeClass(eventClass);
+    }, 200);
   }
 
   getContainer(): JQuery<HTMLElement> {
@@ -74,6 +74,28 @@ class SliderView implements ISliderView {
     return this.getRect().width;
   }
 
+  updateProgressPosition(dotData?: ProgressDotData): void {
+    if (dotData) this.rangeView.updateProgress(dotData);
+    else this.rangeView.updateProgress();
+  }
+
+  updateDot(index: number, pos: number): void {
+    const dot = this.dots[index];
+    dot.setPosition(pos);
+    const { showThumbValue } = this.presenter.getViewProps();
+    const updatedValue = this.presenter.updateDotValue(index, pos);
+    if (showThumbValue) dot.updateMarkValue(updatedValue);
+  }
+
+  moveClosestDotToPos(pos: number): void {
+    const { smooth } = this.presenter.getViewProps();
+    if (smooth) this.setSmoothClass();
+    const closestDot = this.presenter.getClosestDot(pos);
+    const closestPos = this.presenter.getClosestPos(pos);
+    this.updateDot(closestDot, closestPos);
+    this.rangeView.updateProgress();
+  }
+
   compileElement(): JQuery<HTMLElement> {
     const sliderWrapper = DOMHelper.createWrapperElement();
 
@@ -85,27 +107,20 @@ class SliderView implements ISliderView {
 
     this.container.append(sliderWrapper);
     if (showMarks) {
-      const sliderDivisions = DOMHelper.createDivisionsContainerElement();
-      this.presenter.getDivisions().forEach((val) => {
-        const division = DOMHelper.createDivisionElement(val);
-        sliderDivisions.append(division);
-      });
-      sliderWrapper.append(sliderDivisions);
-    }
-    if (showMinAndMax) {
-      const sliderDivisions = DOMHelper.createDivisionsContainerElement();
+      this.marksView = new SliderMarksView(this.presenter.getDivisions(), this);
+      sliderWrapper.append(this.marksView.render());
+    } else if (showMinAndMax) {
       const marks = this.presenter.getDivisions();
-      const validMarks = [marks[0], marks[marks.length - 1]];
-      validMarks.forEach((val) => {
-        const division = DOMHelper.createDivisionElement(val);
-        sliderDivisions.append(division);
-      });
-      sliderWrapper.append(sliderDivisions);
+      const marksData = [marks[0], marks[marks.length - 1]];
+      this.marksView = new SliderMarksView(marksData, this);
+      sliderWrapper.append(this.marksView.render());
     }
     sliderWrapper.append(sliderControls);
     sliderControls.append([sliderRange, ...sliderDots]);
 
-    if (showThumbValue && !showMarks && !showMinAndMax) this.container.addClass(DOMHelper.getEnabledDotMarksModifierClass());
+    if (showThumbValue && !showMarks && !showMinAndMax) {
+      this.container.addClass(DOMHelper.getEnabledDotMarksModifierClass());
+    }
 
     return sliderWrapper;
   }
