@@ -60,18 +60,19 @@ class SliderDotView implements ISliderDotView {
     if (this.active) {
       const isSmooth = this.parentView.presenter.getViewProps().smooth;
       if (isSmooth) {
-        const eventClass = DOMHelper.getDotViewMouseUpEventClass();
-        const sliderContainer = this.parentView.getContainer();
-        sliderContainer.addClass(eventClass);
+        this.parentView.setSmoothClass();
+        // const eventClass = DOMHelper.getDotViewMouseUpEventClass();
+        // const sliderContainer = this.parentView.getContainer();
+        // sliderContainer.addClass(eventClass);
 
         const sliderWidth = this.parentView.getSliderWidth();
         const pos = ((e.clientX - this.shift) / sliderWidth) * 100;
         const validPos = this.parentView.presenter.getClosestPos(pos);
         this.setPosition(validPos);
         this.parentView.updateProgressPosition();
-        setTimeout(() => {
-          sliderContainer.removeClass(eventClass);
-        }, 150);
+        // setTimeout(() => {
+        //   sliderContainer.removeClass(eventClass);
+        // }, 150);
       }
       this.setActive(false);
       this.setShift(0);
