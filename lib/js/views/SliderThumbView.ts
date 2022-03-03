@@ -58,13 +58,13 @@ class SliderThumbView implements ISliderThumbView {
 
   mouseUpHandler(e: JQuery.MouseUpEvent): void {
     if (this.active) {
-      const isSmooth = this.parentView.presenter.getViewProps().smooth;
-      if (isSmooth) {
+      const { smooth } = this.parentView.presenter.getViewProps();
+      if (smooth) {
         this.parentView.setSmoothClass();
-        const sliderWidth = this.parentView.getSliderWidth();
-        const pos = ((e.clientX - this.shift) / sliderWidth) * 100;
-        const validPos = this.parentView.presenter.getClosestPos(pos);
-        this.setPosition(validPos);
+
+        const validPos = this.getValidatedPos(e.clientX);
+        const resultPos = this.parentView.presenter.getClosestPos(validPos);
+        this.setPosition(resultPos);
         this.parentView.updateProgressPosition();
       }
       this.setActive(false);
@@ -76,51 +76,50 @@ class SliderThumbView implements ISliderThumbView {
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void {
     if (this.active) {
       e.preventDefault();
-      const { smooth, thumbs, showThumbValue } = this.parentView.presenter.getViewProps();
-      const sliderWidth = this.parentView.getSliderWidth();
-      let pos = ((e.clientX - this.shift) / sliderWidth) * 100;
+      const { smooth } = this.parentView.presenter.getViewProps();
 
-      if (pos < 0) {
-        pos = 0;
-      }
+      const validPos = this.getValidatedPos(e.clientX);
+      let resultPos;
+      if (smooth) resultPos = validPos;
+      else resultPos = this.parentView.presenter.getClosestPos(validPos);
 
-      if (pos > 100) {
-        pos = 100;
-      }
-
-      if (thumbs.length > 1) {
-        let nextThumbPos;
-        if (this.index === 0) {
-          nextThumbPos = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[1]);
-        } else {
-          nextThumbPos = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[0]);
-        }
-
-        if (
-          (this.index === 0 && pos > nextThumbPos)
-          || (this.index === 1 && pos < nextThumbPos)
-        ) {
-          pos = nextThumbPos;
-        }
-      }
-
-      let validPos;
-      if (smooth) {
-        validPos = pos;
-      } else {
-        validPos = this.parentView.presenter.getClosestPos(pos);
-      }
-
-      this.parentView.updateThumb(this.index, validPos);
+      this.parentView.updateThumb(this.index, resultPos);
       this.parentView.updateProgressPosition({
         index: this.index,
-        pos: validPos,
+        pos: resultPos,
       });
     }
   }
 
   updateMarkValue(val: number): void {
     if (this.valueElement) this.valueElement.html(val.toString());
+  }
+
+  private getValidatedPos(clientPos: number): number {
+    const { thumbs } = this.parentView.presenter.getViewProps();
+    const sliderWidth = this.parentView.getSliderWidth();
+    let pos = ((clientPos - this.shift) / sliderWidth) * 100;
+
+    if (pos < 0) pos = 0;
+    if (pos > 100) pos = 100;
+
+    if (thumbs.length > 1) {
+      let nextThumbPos;
+      if (this.index === 0) {
+        nextThumbPos = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[1]);
+      } else {
+        nextThumbPos = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[0]);
+      }
+
+      if (
+        (this.index === 0 && pos > nextThumbPos)
+        || (this.index === 1 && pos < nextThumbPos)
+      ) {
+        pos = nextThumbPos;
+      }
+    }
+
+    return pos;
   }
 
   compileElement(content: JQuery): JQuery<HTMLElement> {
