@@ -1,4 +1,5 @@
 import ISliderModel from '../../interface/ISliderModel';
+import MarksData from '../../type/MarksData';
 import { SliderModelValues } from '../../type/SliderModel';
 import SliderProps from '../../type/SliderProps';
 import SliderViewProps from '../../type/SliderViewProps';
@@ -83,9 +84,13 @@ class SliderModel implements ISliderModel {
     return viewProps;
   }
 
-  getDivisionsValues(): number[] {
+  getDivisionsValues(): MarksData[] {
     const values = this.getValues();
-    return values;
+    const data = values.map((value) => {
+      const offset = Math.round(((value - this.min) / (this.max - this.min)) * 10000) / 100;
+      return { value, offset };
+    });
+    return data;
   }
 
   getThumbsValues(): number[] {

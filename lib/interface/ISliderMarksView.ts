@@ -1,5 +1,7 @@
+import MarksData from '../type/MarksData';
+
 interface ISliderMarksView {
-  compile(data: number[]): JQuery<HTMLElement>;
+  compile(data: MarksData[]): JQuery<HTMLElement>;
   render(): JQuery<HTMLElement>;
 }
 

@@ -1,6 +1,7 @@
 import ISliderView from './ISliderView';
 import ISliderModel from './ISliderModel';
 import SliderViewProps from '../type/SliderViewProps';
+import MarksData from '../type/MarksData';
 
 interface ISliderPresenter {
   view: ISliderView;
@@ -8,7 +9,7 @@ interface ISliderPresenter {
   getClosestValue(pos: number): number;
   getClosestThumb(pos: number): number;
   getClosestPos(pos: number): number;
-  getDivisions(): number[];
+  getDivisions(): MarksData[];
   getViewProps(): SliderViewProps;
   // updateModel(props: object): void;
   updateThumbValue(index: number, pos: number): number;

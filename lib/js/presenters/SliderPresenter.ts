@@ -5,6 +5,7 @@ import ISliderView from '../../interface/ISliderView';
 import SliderModel from '../models/SliderModel';
 import SliderView from '../views/SliderView';
 import SliderViewProps from '../../type/SliderViewProps';
+import MarksData from '../../type/MarksData';
 
 class SliderPresenter implements ISliderPresenter {
   view: ISliderView;
@@ -39,8 +40,8 @@ class SliderPresenter implements ISliderPresenter {
     return closestPos;
   }
 
-  getDivisions(): number[] {
-    const divisions = this.model.getDivisionsValues();
+  getDivisions(): MarksData[] {
+    const divisions: MarksData[] = this.model.getDivisionsValues();
     return divisions;
   }
 

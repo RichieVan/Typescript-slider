@@ -1,12 +1,13 @@
 import DOMHelper from '../helpers/DOMHelper';
 import ISliderMarksView from '../../interface/ISliderMarksView';
 import ISliderView from '../../interface/ISliderView';
+import MarksData from '../../type/MarksData';
 
 class SliderMarksView implements ISliderMarksView {
   private container: JQuery<HTMLElement>;
 
   constructor(
-    marksObject: number[],
+    marksObject: MarksData[],
     private parentView: ISliderView,
   ) {
     this.container = this.compile(marksObject);
@@ -17,11 +18,13 @@ class SliderMarksView implements ISliderMarksView {
     this.parentView.moveClosestThumbToPos(pos);
   }
 
-  compile(data: number[]) {
+  compile(data: MarksData[]) {
     const container = DOMHelper.createDivisionsContainerElement();
-    data.forEach((val) => {
-      const mark = DOMHelper.createDivisionElement(val);
-      mark.on('click', () => this.mouseClickHandler(val));
+    data.forEach((dataValue) => {
+      const { value, offset } = dataValue;
+      const mark = DOMHelper.createDivisionElement(value);
+      mark.on('click', () => this.mouseClickHandler(value));
+      mark.css({ left: `${offset}%` });
       container.append(mark);
     });
 

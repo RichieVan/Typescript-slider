@@ -1,3 +1,4 @@
+import MarksData from '../type/MarksData';
 import SliderViewProps from '../type/SliderViewProps';
 
 interface ISliderModel {
@@ -10,7 +11,7 @@ interface ISliderModel {
   getThumbsValues(): number[];
   getClosestValue(target: number): number;
   getClosestThumbIndex(target: number): number;
-  getDivisionsValues(): number[];
+  getDivisionsValues(): MarksData[];
   calculateValues(): number[];
 }
 export default ISliderModel;

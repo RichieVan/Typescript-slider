@@ -3,6 +3,7 @@ import ISliderModel from '../../lib/interface/ISliderModel';
 import SliderProps from '../../lib/type/SliderProps';
 import SliderModel from '../../lib/js/models/SliderModel';
 import { SliderModelValues } from '../../lib/type/SliderModel';
+import MarksData from '../../lib/type/MarksData';
 
 type ModelInstance = null | ISliderModel;
 
@@ -229,6 +230,129 @@ const SliderModelTests = function () {
         modelInstance = new SliderModel(modelProps);
 
         assert.deepEqual(modelInstance.calculateValues(), [0, 4.99, 5]);
+      });
+    });
+
+    describe('Рассчет значений и отступов делений слайдера', () => {
+      it('Получить значения для слайдера 0 - 10 с шагом 4', () => {
+        const modelProps: SliderProps = {
+          min: 0,
+          max: 10,
+          step: 4,
+        };
+
+        const expectedResult: MarksData[] = [
+          {
+            value: 0,
+            offset: 0,
+          },
+          {
+            value: 4,
+            offset: 40,
+          },
+          {
+            value: 8,
+            offset: 80,
+          },
+          {
+            value: 10,
+            offset: 100,
+          },
+        ];
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.deepEqual(modelInstance.getDivisionsValues(), expectedResult);
+      });
+
+      it('Получить значения для слайдера -10 - 10 с шагом 3', () => {
+        const modelProps: SliderProps = {
+          min: -10,
+          max: 10,
+          step: 3,
+        };
+
+        const expectedResult: MarksData[] = [
+          {
+            value: -10,
+            offset: 0,
+          },
+          {
+            value: -7,
+            offset: 15,
+          },
+          {
+            value: -4,
+            offset: 30,
+          },
+          {
+            value: -1,
+            offset: 45,
+          },
+          {
+            value: 2,
+            offset: 60,
+          },
+          {
+            value: 5,
+            offset: 75,
+          },
+          {
+            value: 8,
+            offset: 90,
+          },
+          {
+            value: 10,
+            offset: 100,
+          },
+        ];
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.deepEqual(modelInstance.getDivisionsValues(), expectedResult);
+      });
+
+      it('Получить значения для слайдера 10 - 25 с шагом 2.5', () => {
+        const modelProps: SliderProps = {
+          min: 10,
+          max: 25,
+          step: 2.5,
+        };
+
+        const expectedResult: MarksData[] = [
+          {
+            value: 10,
+            offset: 0,
+          },
+          {
+            value: 12.5,
+            offset: 16.67,
+          },
+          {
+            value: 15,
+            offset: 33.33,
+          },
+          {
+            value: 17.5,
+            offset: 50,
+          },
+          {
+            value: 20,
+            offset: 66.67,
+          },
+          {
+            value: 22.5,
+            offset: 83.33,
+          },
+          {
+            value: 25,
+            offset: 100,
+          },
+        ];
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.deepEqual(modelInstance.getDivisionsValues(), expectedResult);
       });
     });
   });
