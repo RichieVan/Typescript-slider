@@ -116,7 +116,8 @@ class SliderModel implements ISliderModel {
     this.thumbsValues.reduce((max, value, index) => {
       const diff = Math.abs(value - target);
 
-      if (diff <= max) {
+      if (diff === max && value < target) closestIndex = index;
+      else if (diff < max) {
         closestIndex = index;
         return diff;
       }
