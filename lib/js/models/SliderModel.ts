@@ -123,7 +123,7 @@ class SliderModel implements ISliderModel {
   calculateValues(): number[] {
     const { min, max, step } = this;
     const values: SliderModelValues = [];
-    const steps = Math.round(this.getLength() / step);
+    const steps = Math.ceil(this.getLength() / step);
 
     for (let i = 0; i < steps; i += 1) {
       const value = Math.round((min + i * step) * 1000) / 1000;

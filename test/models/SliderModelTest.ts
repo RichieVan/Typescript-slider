@@ -205,6 +205,32 @@ const SliderModelTests = function () {
         assert.equal(modelInstance.getClosestThumbIndex(4), 0);
       });
     });
+
+    describe('Рассчет значений слайдера по шагу', () => {
+      it('Вернуть значения [0, 4, 5] при шаге 4', () => {
+        const modelProps: SliderProps = {
+          min: 0,
+          max: 5,
+          step: 4,
+        };
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.deepEqual(modelInstance.calculateValues(), [0, 4, 5]);
+      });
+
+      it('Вернуть значения [0, 4.99, 5] при шаге 4.99', () => {
+        const modelProps: SliderProps = {
+          min: 0,
+          max: 5,
+          step: 4.99,
+        };
+
+        modelInstance = new SliderModel(modelProps);
+
+        assert.deepEqual(modelInstance.calculateValues(), [0, 4.99, 5]);
+      });
+    });
   });
 };
 
