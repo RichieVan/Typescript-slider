@@ -12,11 +12,14 @@ class SliderPresenter implements ISliderPresenter {
 
   model: ISliderModel;
 
-  constructor(props: SliderProps) {
+  constructor(
+    target: JQuery<HTMLElement>,
+    props: SliderProps,
+  ) {
     this.model = new SliderModel(props);
     this.view = new SliderView(this);
 
-    this.view.render();
+    this.view.render(target);
   }
 
   getClosestValue(pos: number): number {

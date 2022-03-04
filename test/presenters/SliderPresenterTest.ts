@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { assert, expect } from 'chai';
 import ISliderPresenter from '../../lib/interface/ISliderPresenter';
 import SliderPresenter from '../../lib/js/presenters/SliderPresenter';
@@ -16,7 +17,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 40 в значение слайдера 4', () => {
         const pos = 40;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 10,
         });
@@ -26,7 +27,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 60 в значение слайдера 6', () => {
         const pos = 60;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 10,
         });
@@ -36,7 +37,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 66.6 в значение слайдера 6.66', () => {
         const pos = 66.6;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 10,
         });
@@ -46,7 +47,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 66.6 в значение слайдера 13.32', () => {
         const pos = 66.6;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 20,
         });
@@ -56,7 +57,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 100 в значение слайдера 37', () => {
         const pos = 100;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 37,
         });
@@ -66,7 +67,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 20 в значение слайдера 70', () => {
         const pos = 20;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 50,
           max: 150,
         });
@@ -76,7 +77,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 40 в значение слайдера 900', () => {
         const pos = 40;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 500,
           max: 1500,
         });
@@ -86,7 +87,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 20 в значение слайдера -260', () => {
         const pos = 20;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: -500,
           max: 700,
         });
@@ -96,7 +97,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать процентную DOM координату 50 в значение слайдера 100', () => {
         const pos = 50;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: -500,
           max: 700,
         });
@@ -113,7 +114,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 4 в процентную DOM координату 40', () => {
         const val = 4;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 10,
         });
@@ -123,7 +124,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 6 в процентную DOM координату 60', () => {
         const val = 6;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 10,
         });
@@ -133,7 +134,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 6.66 в процентную DOM координату 66.6', () => {
         const val = 6.66;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 10,
         });
@@ -143,7 +144,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 13.32 в процентную DOM координату 66.6', () => {
         const val = 13.32;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 20,
         });
@@ -153,7 +154,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 37 в процентную DOM координату 100', () => {
         const val = 37;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 0,
           max: 37,
         });
@@ -163,7 +164,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 70 в процентную DOM координату 20', () => {
         const val = 70;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 50,
           max: 150,
         });
@@ -173,7 +174,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 900 в процентную DOM координату 40', () => {
         const val = 900;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: 500,
           max: 1500,
         });
@@ -183,7 +184,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера -260 в процентную DOM координату 20', () => {
         const val = -260;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: -500,
           max: 700,
         });
@@ -193,7 +194,7 @@ const SliderPresenterTests = function () {
 
       it('Преобразовать значение слайдера 100 в процентную DOM координату 50', () => {
         const val = 100;
-        presenter = new SliderPresenter({
+        presenter = new SliderPresenter($('body'), {
           min: -500,
           max: 700,
         });

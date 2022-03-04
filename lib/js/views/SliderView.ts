@@ -125,8 +125,9 @@ class SliderView implements ISliderView {
     return sliderWrapper;
   }
 
-  render(): void {
-    document.body.appendChild(this.container[0]);
+  render(target: JQuery<HTMLElement>): void {
+    // document.body.appendChild(this.container[0]);
+    target.append(this.container[0]);
 
     const { thumbs } = this.presenter.getViewProps();
     this.thumbs.forEach((thumb, index) => {
