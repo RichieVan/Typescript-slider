@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.slider {
+.rv-slider {
   $slider-color: rgb(156, 156, 156);
   $active-color: rgb(100, 232, 255);
   $progress-color: rgb(157, 244, 255);
@@ -13,7 +13,8 @@
   $corner-width: 8px;
 
   display: inline-block;
-  width: calc($slider-width + 40px);
+  // width: calc($slider-width + 40px);
+  width: 100%;
   padding: 0 20px;
 
   &__wrapper {
@@ -74,7 +75,7 @@
 
   &__range-inner {
     position: relative;
-    width: $slider-width;
+    width: 100%;
     height: 100%;
     margin: 0 auto;
   }
@@ -197,11 +198,11 @@
   }
 
   &_moving_to_valid {
-    .slider__thumb {
+    .rv-slider__thumb {
       transition: left .15s linear;
     }
 
-    .slider__progress {
+    .rv-slider__progress {
       transition: 
         width .15s linear,
         left .15s linear;
