@@ -13,7 +13,7 @@ class SliderRangeView implements ISliderRangeView {
   progressBar: JQuery<HTMLElement>;
 
   constructor(public parentView: ISliderView) {
-    [this.wrapper, this.range, this.progressBar] = this.compileElement();
+    [this.wrapper, this.range, this.progressBar] = this.compile();
   }
 
   updateProgress(thumbData?: ProgressThumbData): void {
@@ -75,7 +75,7 @@ class SliderRangeView implements ISliderRangeView {
     this.parentView.moveClosestThumbToPos(pos);
   }
 
-  compileElement(): JQuery<HTMLElement>[] {
+  compile(): JQuery<HTMLElement>[] {
     const [wrapper, range, progress] = DOMHelper.createRangeElement();
 
     wrapper.on('dragstart', () => false);

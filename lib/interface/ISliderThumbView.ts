@@ -6,14 +6,14 @@ interface ISliderThumbView {
   setShift(val: number): void;
   setPosition(pos: number): void;
   getRect(): DOMRect;
-  getElement(): JQuery;
+  getElement(): JQuery<HTMLElement>;
   getContentShift(): number;
   mouseDownHandler(e: JQuery.MouseDownEvent | JQuery.TouchStartEvent): void;
   mouseUpHandler(e: JQuery.MouseUpEvent | JQuery.TouchEndEvent | JQuery.TouchCancelEvent): void;
   mouseMoveHandler(e: JQuery.MouseMoveEvent | JQuery.TouchMoveEvent): void;
   updateMarkValue(val: number): void;
-  compileElement(content: JQuery): JQuery;
-  render(): JQuery;
+  compile(content: JQuery<HTMLElement>): JQuery<HTMLElement>;
+  render(): JQuery<HTMLElement>;
 }
 
 export default ISliderThumbView;

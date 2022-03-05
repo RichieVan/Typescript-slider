@@ -18,7 +18,7 @@ class SliderMarksView implements ISliderMarksView {
     this.parentView.moveClosestThumbToPos(pos);
   }
 
-  compile(data: MarksData[]) {
+  compile(data: MarksData[]): JQuery<HTMLElement> {
     const container = DOMHelper.createDivisionsContainerElement();
     data.forEach((dataValue) => {
       const { value, offset } = dataValue;

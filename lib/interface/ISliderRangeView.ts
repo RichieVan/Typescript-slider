@@ -5,7 +5,7 @@ interface ISliderRangeView {
   updateProgress(thumbData?: ProgressThumbData): void;
   getRangeRect(): DOMRect;
   mouseClickHandler(e: JQuery.ClickEvent): void;
-  compileElement(): JQuery<HTMLElement>[];
+  compile(): JQuery<HTMLElement>[];
   render(): JQuery<HTMLElement>;
 }
 

@@ -22,7 +22,7 @@ class SliderThumbView implements ISliderThumbView {
     private index: number,
   ) {
     this.content = DOMHelper.createThumbContentElement();
-    this.element = this.compileElement(this.content);
+    this.element = this.compile(this.content);
   }
 
   setActive(val: boolean): void {
@@ -149,7 +149,7 @@ class SliderThumbView implements ISliderThumbView {
     return pos;
   }
 
-  compileElement(content: JQuery): JQuery<HTMLElement> {
+  compile(content: JQuery<HTMLElement>): JQuery<HTMLElement> {
     const [element, wrapper] = DOMHelper.createThumbElement();
 
     element.on('dragstart', () => false);

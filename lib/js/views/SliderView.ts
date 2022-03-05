@@ -42,7 +42,7 @@ class SliderView implements ISliderView {
     this.rangeView = new SliderRangeView(this);
 
     this.container = DOMHelper.createSliderElement();
-    this.element = this.compileElement();
+    this.element = this.compile();
   }
 
   setThumbPosition(thumbIndex: number, pos: number): void {
@@ -100,7 +100,7 @@ class SliderView implements ISliderView {
     this.rangeView.updateProgress();
   }
 
-  compileElement(): JQuery<HTMLElement> {
+  compile(): JQuery<HTMLElement> {
     const sliderWrapper = DOMHelper.createWrapperElement();
 
     const {

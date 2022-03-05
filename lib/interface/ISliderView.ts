@@ -14,7 +14,7 @@ interface ISliderView {
   updateProgressPosition(thumbData?: ProgressThumbData): void;
   updateThumb(index: number, pos: number): void;
   moveClosestThumbToPos(pos: number): void;
-  compileElement(): JQuery;
+  compile(): JQuery<HTMLElement>;
   render(target: JQuery<HTMLElement> | HTMLElement): void;
   destroy(): void;
 }
