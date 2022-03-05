@@ -135,6 +135,10 @@ class DOMHelper {
   public static getEnabledThumbMarksModifierClass(): string {
     return 'rv-slider_with_thumb-mark';
   }
+
+  public static getVerticalClass(): string {
+    return 'rv-slider_vertical';
+  }
 }
 
 export default DOMHelper;

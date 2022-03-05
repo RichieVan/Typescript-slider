@@ -19,7 +19,7 @@ class SliderRangeView implements ISliderRangeView {
   updateProgress(thumbData?: ProgressThumbData): void {
     const emptyClass = DOMHelper.getProgressBarEmptyClass();
     const fullClass = DOMHelper.getProgressBarFullClass();
-    const { thumbs, smooth } = this.parentView.presenter.getViewProps();
+    const { thumbs, smooth, vertical } = this.parentView.presenter.getViewProps();
 
     if (thumbs.length > 1) {
       let from = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[0]);
@@ -35,10 +35,17 @@ class SliderRangeView implements ISliderRangeView {
       if (to === 100) this.progressBar.addClass(fullClass);
       else if (this.progressBar.hasClass(fullClass)) this.progressBar.removeClass(fullClass);
 
-      this.progressBar.css({
-        left: `${from}%`,
-        width: `${to - from}%`,
-      });
+      if (vertical) {
+        this.progressBar.css({
+          top: `${from}%`,
+          height: `${to - from}%`,
+        });
+      } else {
+        this.progressBar.css({
+          left: `${from}%`,
+          width: `${to - from}%`,
+        });
+      }
     } else {
       let to = this.parentView.presenter.convertSliderValueToDOMPos(thumbs[0]);
 
@@ -51,7 +58,8 @@ class SliderRangeView implements ISliderRangeView {
       if (to === 100) this.progressBar.addClass(fullClass);
       else if (this.progressBar.hasClass(fullClass)) this.progressBar.removeClass(fullClass);
 
-      this.progressBar.css({ width: `${to}%` });
+      if (vertical) this.progressBar.css({ height: `${to}%` });
+      else this.progressBar.css({ width: `${to}%` });
     }
   }
 
@@ -60,7 +68,10 @@ class SliderRangeView implements ISliderRangeView {
   }
 
   mouseClickHandler(e: JQuery.ClickEvent): void {
-    const pos = ((e.clientX - this.getRangeRect().left) / this.getRangeRect().width) * 100;
+    const { vertical } = this.parentView.presenter.getViewProps();
+    let pos;
+    if (vertical) pos = ((e.clientY - this.getRangeRect().top) / this.getRangeRect().height) * 100;
+    else pos = ((e.clientX - this.getRangeRect().left) / this.getRangeRect().width) * 100;
     this.parentView.moveClosestThumbToPos(pos);
   }
 

@@ -10,7 +10,7 @@ interface ISliderView {
   getContainer(): JQuery<HTMLElement>;
   getRect(): DOMRect;
   getThumbs(): ISliderThumbView[];
-  getSliderWidth(): number;
+  getSliderSize(): number;
   updateProgressPosition(thumbData?: ProgressThumbData): void;
   updateThumb(index: number, pos: number): void;
   moveClosestThumbToPos(pos: number): void;

@@ -70,7 +70,7 @@ class SliderPresenter implements ISliderPresenter {
 
   convertDOMPosToSliderValue(pos: number): number {
     const length = this.model.getLength();
-    const sliderWidth = this.view.getSliderWidth();
+    const sliderWidth = this.view.getSliderSize();
     const result = Math.round((this.model.getMin() + ((sliderWidth / 100) * pos) / (sliderWidth / length)) * 100) / 100;
 
     return result;
@@ -78,7 +78,7 @@ class SliderPresenter implements ISliderPresenter {
 
   convertSliderValueToDOMPos(val: number): number {
     const length = this.model.getLength();
-    const sliderWidth = this.view.getSliderWidth();
+    const sliderWidth = this.view.getSliderSize();
     const pixelPos = (sliderWidth / length) * (val - this.model.getMin());
     const percentPos = Math.round((pixelPos / sliderWidth) * 100000) / 1000;
 

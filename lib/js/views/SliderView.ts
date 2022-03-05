@@ -70,8 +70,12 @@ class SliderView implements ISliderView {
     return this.thumbs;
   }
 
-  getSliderWidth(): number {
-    return this.getRect().width;
+  getSliderSize(): number {
+    const { vertical } = this.presenter.getViewProps();
+    let result: number;
+    if (vertical) result = this.getRect().height;
+    else result = this.getRect().width;
+    return result;
   }
 
   updateProgressPosition(thumbData?: ProgressThumbData): void {
@@ -99,7 +103,12 @@ class SliderView implements ISliderView {
   compileElement(): JQuery<HTMLElement> {
     const sliderWrapper = DOMHelper.createWrapperElement();
 
-    const { showMarks, showThumbValue, showMinAndMax } = this.presenter.getViewProps();
+    const {
+      showMarks,
+      showThumbValue,
+      showMinAndMax,
+      vertical,
+    } = this.presenter.getViewProps();
 
     const sliderControls = DOMHelper.createControlsElement();
     const sliderRange = this.rangeView.render();
@@ -120,6 +129,9 @@ class SliderView implements ISliderView {
 
     if (showThumbValue && !showMarks && !showMinAndMax) {
       this.container.addClass(DOMHelper.getEnabledThumbMarksModifierClass());
+    }
+    if (vertical) {
+      this.container.addClass(DOMHelper.getVerticalClass());
     }
 
     return sliderWrapper;

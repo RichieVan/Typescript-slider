@@ -34,7 +34,9 @@ class SliderThumbView implements ISliderThumbView {
   }
 
   setPosition(pos: number): void {
-    this.element.css({ left: `${pos}%` });
+    const { vertical } = this.parentView.presenter.getViewProps();
+    if (vertical) this.element.css({ top: `${pos}%` });
+    else this.element.css({ left: `${pos}%` });
   }
 
   getRect(): DOMRect {
@@ -46,23 +48,34 @@ class SliderThumbView implements ISliderThumbView {
   }
 
   getContentShift(): number {
-    return this.content[0].getBoundingClientRect().width / 2;
+    let contentShift: number;
+    const { vertical } = this.parentView.presenter.getViewProps();
+    if (vertical) contentShift = this.content[0].getBoundingClientRect().height / 2;
+    else contentShift = this.content[0].getBoundingClientRect().width / 2;
+    return contentShift;
   }
 
   mouseDownHandler(e: JQuery.MouseDownEvent): void {
     e.preventDefault();
     this.setActive(true);
-    this.setShift(e.offsetX + this.parentView.getRect().left - this.getContentShift());
+    const { vertical } = this.parentView.presenter.getViewProps();
+    let shift: number;
+    if (vertical) {
+      shift = e.offsetY + this.parentView.getRect().top - this.getContentShift();
+    } else {
+      shift = e.offsetX + this.parentView.getRect().left - this.getContentShift();
+    }
+    this.setShift(shift);
     this.element.addClass(DOMHelper.getThumbActiveClass());
   }
 
   mouseUpHandler(e: JQuery.MouseUpEvent): void {
     if (this.active) {
-      const { smooth } = this.parentView.presenter.getViewProps();
+      const { smooth, vertical } = this.parentView.presenter.getViewProps();
       if (smooth) {
         this.parentView.setSmoothClass();
 
-        const validPos = this.getValidatedPos(e.clientX);
+        const validPos = this.getValidatedPos(vertical ? e.clientY : e.clientX);
         const resultPos = this.parentView.presenter.getClosestPos(validPos);
         this.setPosition(resultPos);
         this.parentView.updateProgressPosition();
@@ -76,9 +89,9 @@ class SliderThumbView implements ISliderThumbView {
   mouseMoveHandler(e: JQuery.MouseMoveEvent): void {
     if (this.active) {
       e.preventDefault();
-      const { smooth } = this.parentView.presenter.getViewProps();
+      const { smooth, vertical } = this.parentView.presenter.getViewProps();
 
-      const validPos = this.getValidatedPos(e.clientX);
+      const validPos = this.getValidatedPos(vertical ? e.clientY : e.clientX);
       let resultPos;
       if (smooth) resultPos = validPos;
       else resultPos = this.parentView.presenter.getClosestPos(validPos);
@@ -97,8 +110,8 @@ class SliderThumbView implements ISliderThumbView {
 
   private getValidatedPos(clientPos: number): number {
     const { thumbs } = this.parentView.presenter.getViewProps();
-    const sliderWidth = this.parentView.getSliderWidth();
-    let pos = ((clientPos - this.shift) / sliderWidth) * 100;
+    const sliderSize = this.parentView.getSliderSize();
+    let pos = ((clientPos - this.shift) / sliderSize) * 100;
 
     if (pos < 0) pos = 0;
     if (pos > 100) pos = 100;

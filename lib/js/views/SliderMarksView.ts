@@ -24,7 +24,9 @@ class SliderMarksView implements ISliderMarksView {
       const { value, offset } = dataValue;
       const mark = DOMHelper.createDivisionElement(value);
       mark.on('click', () => this.mouseClickHandler(value));
-      mark.css({ left: `${offset}%` });
+      const { vertical } = this.parentView.presenter.getViewProps();
+      if (vertical) mark.css({ top: `${offset}%` });
+      else mark.css({ left: `${offset}%` });
       container.append(mark);
     });
 

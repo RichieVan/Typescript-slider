@@ -5,6 +5,7 @@ type SliderViewProps = {
   showThumbValue: boolean;
   showMarks: boolean;
   showMinAndMax: boolean;
+  vertical: boolean;
 };
 
 export default SliderViewProps;

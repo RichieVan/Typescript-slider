@@ -10,6 +10,7 @@ type SliderProps = {
   showThumbValue?: boolean;
   showMarks?: boolean;
   showMinAndMax?: boolean;
+  vertical?: boolean;
 };
 
 export default SliderProps;
