@@ -55,27 +55,38 @@ class SliderThumbView implements ISliderThumbView {
     return contentShift;
   }
 
-  mouseDownHandler(e: JQuery.MouseDownEvent): void {
-    e.preventDefault();
+  mouseDownHandler(e: JQuery.MouseDownEvent | JQuery.TouchStartEvent): void {
+    if (!e.touches) e.preventDefault();
     this.setActive(true);
     const { vertical } = this.parentView.presenter.getViewProps();
     let shift: number;
-    if (vertical) {
+    if (e.touches && vertical) {
+      const offset = e.touches[0].clientY - e.target.getBoundingClientRect().top;
+      shift = offset + this.parentView.getRect().top - this.getContentShift();
+    } else if (e.touches) {
+      const offset = e.touches[0].clientX - e.target.getBoundingClientRect().left;
+      shift = offset + this.parentView.getRect().left - this.getContentShift();
+    } else if (vertical) {
       shift = e.offsetY + this.parentView.getRect().top - this.getContentShift();
     } else {
       shift = e.offsetX + this.parentView.getRect().left - this.getContentShift();
     }
+
     this.setShift(shift);
     this.element.addClass(DOMHelper.getThumbActiveClass());
   }
 
-  mouseUpHandler(e: JQuery.MouseUpEvent): void {
+  mouseUpHandler(e: JQuery.MouseUpEvent | JQuery.TouchCancelEvent | JQuery.TouchEndEvent): void {
     if (this.active) {
       const { smooth, vertical } = this.parentView.presenter.getViewProps();
       if (smooth) {
         this.parentView.setSmoothClass();
 
-        const validPos = this.getValidatedPos(vertical ? e.clientY : e.clientX);
+        let clientPos;
+        if (e.touches) [clientPos] = e.changedTouches;
+        else clientPos = e;
+
+        const validPos = this.getValidatedPos(vertical ? clientPos.clientY : clientPos.clientX);
         const resultPos = this.parentView.presenter.getClosestPos(validPos);
         this.setPosition(resultPos);
         this.parentView.updateProgressPosition();
@@ -86,12 +97,15 @@ class SliderThumbView implements ISliderThumbView {
     }
   }
 
-  mouseMoveHandler(e: JQuery.MouseMoveEvent): void {
+  mouseMoveHandler(e: JQuery.MouseMoveEvent | JQuery.TouchMoveEvent): void {
     if (this.active) {
-      e.preventDefault();
+      if (!e.touches) e.preventDefault();
       const { smooth, vertical } = this.parentView.presenter.getViewProps();
+      let clientPos;
+      if (e.touches) [clientPos] = e.touches;
+      else clientPos = e;
 
-      const validPos = this.getValidatedPos(vertical ? e.clientY : e.clientX);
+      const validPos = this.getValidatedPos(vertical ? clientPos.clientY : clientPos.clientX);
       let resultPos;
       if (smooth) resultPos = validPos;
       else resultPos = this.parentView.presenter.getClosestPos(validPos);
@@ -140,17 +154,18 @@ class SliderThumbView implements ISliderThumbView {
 
     element.on('dragstart', () => false);
 
-    element.on('mousedown', (e: JQuery.MouseDownEvent) => {
-      this.mouseDownHandler(e);
-    });
+    element
+      .on('mousedown', (e: JQuery.MouseDownEvent) => this.mouseDownHandler(e))
+      .on('touchstart', (e: JQuery.TouchStartEvent) => this.mouseDownHandler(e));
 
-    $(document).on('mouseup', (e: JQuery.MouseUpEvent) => {
-      this.mouseUpHandler(e);
-    });
+    $(document)
+      .on('mouseup', (e: JQuery.MouseUpEvent) => this.mouseUpHandler(e))
+      .on('touchend', (e: JQuery.TouchEndEvent) => this.mouseUpHandler(e))
+      .on('touchcancel', (e: JQuery.TouchCancelEvent) => this.mouseUpHandler(e));
 
-    $(document).on('mousemove', (e: JQuery.MouseMoveEvent) => {
-      this.mouseMoveHandler(e);
-    });
+    $(document)
+      .on('mousemove', (e: JQuery.MouseMoveEvent) => this.mouseMoveHandler(e))
+      .on('touchmove', (e: JQuery.TouchMoveEvent) => this.mouseMoveHandler(e));
 
     const { showThumbValue } = this.parentView.presenter.getViewProps();
     if (showThumbValue) {

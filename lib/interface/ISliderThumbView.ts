@@ -8,9 +8,9 @@ interface ISliderThumbView {
   getRect(): DOMRect;
   getElement(): JQuery;
   getContentShift(): number;
-  mouseDownHandler(e: JQuery.MouseDownEvent): void;
-  mouseUpHandler(e: JQuery.MouseUpEvent): void;
-  mouseMoveHandler(e: JQuery.MouseMoveEvent): void;
+  mouseDownHandler(e: JQuery.MouseDownEvent | JQuery.TouchStartEvent): void;
+  mouseUpHandler(e: JQuery.MouseUpEvent | JQuery.TouchEndEvent | JQuery.TouchCancelEvent): void;
+  mouseMoveHandler(e: JQuery.MouseMoveEvent | JQuery.TouchMoveEvent): void;
   updateMarkValue(val: number): void;
   compileElement(content: JQuery): JQuery;
   render(): JQuery;

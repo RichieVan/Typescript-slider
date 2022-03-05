@@ -20,6 +20,7 @@
   display: inline-block;
   width: 100%;
   padding: 0 20px;
+  box-sizing: border-box;
 
   & * {
     box-sizing: border-box;
@@ -219,6 +220,7 @@
     width: 0;
     height: $thumb-size;
     cursor: pointer;
+    touch-action: none;
 
     &-content {
       $shadow-size: 3px;
