@@ -1,20 +1,29 @@
-* {
-  box-sizing: border-box;
-}
-
 .rv-slider {
   $slider-color: rgb(156, 156, 156);
   $active-color: rgb(100, 232, 255);
   $progress-color: rgb(157, 244, 255);
   $light-gray-color: rgb(204, 204, 204);
-  $slider-width: 600px;
-  $controls-height: 24px;
-  $range-height: 16px;
-  $corner-width: 8px;
+
+  $thumb-size: 36px;
+  $range-size: 24px;
+  $borders-size: 3px;
+  $marker-height: 14px;
+  $marker-width: 3px;
+  $mark-value-font-size: 20px;
+  $mark-value-line-height: calc($mark-value-font-size + 2px);
+
+  $transition-duration: .15s;
+
+  $corner-width: calc($range-size / 2);
+  $corner-border-radius: calc($range-size / 2);
 
   display: inline-block;
   width: 100%;
   padding: 0 20px;
+
+  & * {
+    box-sizing: border-box;
+  }
 
   &_vertical {
     position: absolute;
@@ -29,18 +38,17 @@
 
   &_vertical &__wrapper {
     display: flex;
-    // flex-grow: 1;
     position: relative;
     width: 100%;
   }
 
   &__divisions {
     position: relative;
-    height: 36px;
+    height: calc($marker-height + $mark-value-line-height);
   }
 
   &_vertical &__divisions {
-    width: 36px;
+    width: calc($marker-height + $mark-value-line-height);
     height: 100%;
     order: 1;
   }
@@ -61,13 +69,14 @@
     }
 
     &-marker {
-      width: 2px;
-      height: 20px;
+      width: $marker-width;
+      height: $marker-height;
       background: $light-gray-color;
     }
 
     &-value {
-      font-size: 14px;
+      font-size: $mark-value-font-size;
+      line-height: $mark-value-line-height;
     }
   }
 
@@ -83,8 +92,8 @@
     }
 
     &-marker {
-      width: 20px;
-      height: 2px;
+      width: $marker-height;
+      height: $marker-width;
       margin-right: 2px;
     }
 
@@ -95,17 +104,17 @@
 
   &__controls {
     position: relative;
-    height: $controls-height;
+    height: $thumb-size;
     margin-top: 0;
   }
 
   &_vertical &__controls {
     height: 100%;
-    width: $controls-height;
+    width: $thumb-size;
   }
 
   &_with_thumb-mark &__controls {
-    margin-top: 36px;
+    margin-top: calc($marker-height + $mark-value-line-height);
   }
 
   &_vertical.rv-slider_with_thumb-mark &__controls {
@@ -114,21 +123,21 @@
 
   &__range-wrapper {
     position: relative;
-    top: calc(($controls-height - $range-height) / 2);
-    height: $range-height;
-    padding: 0 6px;
+    top: calc(($thumb-size - $range-size) / 2);
+    height: $range-size;
+    padding: 0 calc($corner-width - $borders-size);
     margin: 0 calc(-1 * $corner-width);
-    border: 2px solid $slider-color;
-    border-radius: 8px;
+    border: $borders-size solid $slider-color;
+    border-radius: $corner-border-radius;
     background: #fff;
   }
 
   &_vertical &__range-wrapper {
     top: 0;
-    left: 4px;
-    width: $range-height;
+    left: calc(($thumb-size - $range-size) / 2);
+    width: $range-size;
     height: calc(100% + $corner-width * 2);
-    padding: 6px 0;
+    padding: calc($corner-width - $borders-size) 0;
     margin: calc(-1 * $corner-width) 0;
   }
 
@@ -150,18 +159,18 @@
     top: 0;
     height: 100%;
     background: $progress-color;
-    border-radius: 8px;
+    border-radius: $corner-border-radius;
     pointer-events: none;
 
     &:before {
       content: '';
       display: block;
       position: absolute;
-      left: -6px;
+      left: calc(-1 * ($corner-width - $borders-size));
       top: 0;
-      width: 18px;
+      width: calc($corner-width * 2);
       height: 100%;
-      border-radius: 8px;
+      border-radius: $corner-border-radius;
     }
 
     &:not(.rv-slider__progress_empty):before {
@@ -172,11 +181,11 @@
       content: '';
       display: block;
       position: absolute;
-      right: -6px;
+      right: calc(-1 * ($corner-width - $borders-size));
       top: 0;
-      width: 18px;
+      width: calc($corner-width * 2);
       height: 100%;
-      border-radius: 8px;
+      border-radius: $corner-border-radius;
     }
 
     &_full:after {
@@ -190,16 +199,16 @@
 
     &:before {
       left: 0;
-      top: -6px;
+      top: calc(-1 * ($corner-width - $borders-size));
       width: 100%;
-      height: 18px;
+      height: calc($corner-width * 2);
     }
 
     &:after {
       right: 0;
-      top: -6px;
+      top: calc(-1 * ($corner-width - $borders-size));
       width: 100%;
-      height: 18px;
+      height: calc($corner-width * 2);
     }
   }
 
@@ -208,18 +217,18 @@
     left: 0;
     top: 0;
     width: 0;
-    height: $controls-height;
+    height: $thumb-size;
     cursor: pointer;
 
     &-content {
-      $shadow-size: 2px;
-      $border-size: 2px;
-      $outline-size: 2px;
+      $shadow-size: 3px;
+      $border-size: 3px;
+      $outline-size: 3px;
 
       position: relative;
-      left: calc($controls-height * -1 / 2);
-      width: $controls-height;
-      height: $controls-height;
+      left: calc($thumb-size * -1 / 2);
+      width: $thumb-size;
+      height: $thumb-size;
       border-radius: 50%;
       overflow: hidden;
 
@@ -228,8 +237,8 @@
         position: absolute;
         left: $outline-size;
         top: $outline-size;
-        width: calc($controls-height - ($outline-size * 2));
-        height: calc($controls-height - ($outline-size * 2));
+        width: calc($thumb-size - ($outline-size * 2));
+        height: calc($thumb-size - ($outline-size * 2));
         border: $border-size solid #fff;
         border-radius: 50%;
         outline: $outline-size solid $slider-color;
@@ -251,19 +260,20 @@
       flex-direction: column;
       align-items: center;
       position: absolute;
-      left: -12px;
+      left: calc(-1 * ($thumb-size / 2));
       bottom: 100%;
-      width: 24px;
+      width: $thumb-size;
     }
 
     &-marker {
-      width: 2px;
-      height: 20px;
+      width: $marker-width;
+      height: $marker-height;
       background: $slider-color;
     }
 
     &-value {
-      font-size: 14px;
+      font-size: $mark-value-font-size;
+      line-height: $mark-value-line-height;
     }
 
     &_active {
@@ -276,7 +286,7 @@
   }
 
   &_vertical &__thumb {
-    width: $controls-height;
+    width: $thumb-size;
     height: 0;
 
     &-wrapper {
@@ -285,22 +295,22 @@
     }
 
     &-content {
-      top: calc($controls-height * -1 / 2);
+      top: calc($thumb-size * -1 / 2);
       left: 0;
     }
 
     &-mark {
       flex-direction: row;
-      top: -12px;
+      top: calc(-1 * ($thumb-size / 2));
       left: 100%;
       bottom: auto;
       width: auto;
-      height: 24px;
+      height: $thumb-size;
     }
 
     &-marker {
-      width: 20px;
-      height: 2px;
+      width: $marker-height;
+      height: $marker-width;
       margin-right: 2px;
     }
 
@@ -310,27 +320,27 @@
   }
 
   &_moving_to_valid &__thumb {
-    transition: left .15s linear;
+    transition: left $transition-duration linear;
   }
 
   &_vertical.rv-slider_moving_to_valid &__thumb {
-    transition: top .15s linear;
+    transition: top $transition-duration linear;
   }
 
   &_moving_to_valid &__progress {
     transition: 
-      width .15s linear,
-      left .15s linear;
+      width $transition-duration linear,
+      left $transition-duration linear;
 
     &:before,
     &:after {
-      transition: background-color 0s linear .15s;
+      transition: background-color 0s linear $transition-duration;
     }
   }
 
   &_vertical.rv-slider_moving_to_valid &__progress {
     transition: 
-      height .15s linear,
-      top .15s linear;
+      height $transition-duration linear,
+      top $transition-duration linear;
   }
 }
