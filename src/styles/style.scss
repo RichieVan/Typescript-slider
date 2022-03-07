@@ -1,8 +1,98 @@
 .sliders-list {
-  width: 90%;
-}
+  width: 1200px;
+  margin: 0 auto;
 
-#slider7 {
-  position: absolute;
-  height: 500px;
+  .slider {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 20px;
+    border: 2px solid #000;
+
+    &-container {
+      padding: 10px;
+    }
+  }
+
+  .panel {
+    $panel-fz: 18px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 10px;
+    font-size: $panel-fz;
+    background: #a8ccd1;
+    box-sizing: border-box;
+
+    &-field {
+      display: flex;
+      padding: 0 10px;
+      margin-bottom: 15px;
+
+      &__label {
+        display: flex;
+
+        span {
+          margin-right: 10px;
+        }
+      }
+
+      &__input {
+        font-size: 16px;
+        padding: 2px;
+        order: 1;
+      }
+
+      &_checkbox {
+        .panel-field__label {
+          cursor: pointer;
+        }
+
+        .panel-field__input {
+          display: none;
+        }
+
+        span {
+          position: relative;
+          padding-right: 30px;
+          margin: 0;
+  
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 20px;
+            width: 20px;
+            border: 1px solid black;
+            background: #fff;
+          }
+  
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            height: 14px;
+            width: 14px;
+          }
+        }
+
+        .panel-field__input:checked + span:after {
+          background: #000;
+        }
+      }
+    }
+
+    &_vertical {
+      flex-direction: column;
+      position: absolute;
+      width: calc(100% - 120px);
+      height: 100%;
+      margin: 0 0 0 120px;
+    }
+  }
 }

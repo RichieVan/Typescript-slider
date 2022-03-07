@@ -13,13 +13,43 @@ class SliderPresenter implements ISliderPresenter {
   model: ISliderModel;
 
   constructor(
-    target: JQuery<HTMLElement>,
+    private target: JQuery<HTMLElement>,
     props: SliderProps,
   ) {
     this.model = new SliderModel(props);
     this.view = new SliderView(this);
 
     this.view.render(target);
+  }
+
+  setMin(val: number): void {
+    this.model.setMin(val);
+    this.updateView();
+  }
+
+  setMax(val: number): void {
+    this.model.setMax(val);
+    this.updateView();
+  }
+
+  setStep(val: number): void {
+    this.model.setStep(val);
+    this.updateView();
+  }
+
+  setThumbs(val: number[]): void {
+    this.model.setThumbsValues(val);
+    this.updateView();
+  }
+
+  setToggableProp<K extends keyof SliderProps>(key: K, val: boolean): void {
+    if (key === 'smooth') this.model.setSmooth(val);
+    else if (key === 'range') this.model.setRange(val);
+    else if (key === 'showThumbValue') this.model.setShowThumbValue(val);
+    else if (key === 'showMarks') this.model.setShowMarks(val);
+    else if (key === 'showMinAndMax') this.model.setShowMinAndMax(val);
+    else if (key === 'vertical') this.model.setVertical(val);
+    this.updateView();
   }
 
   getClosestValue(pos: number): number {
@@ -53,14 +83,9 @@ class SliderPresenter implements ISliderPresenter {
     return viewProps;
   }
 
-  // updateModel(props: SliderProps): void {
-  //   Object.keys(props).forEach((key: string) => {
-  //     if (key === 'thumbsValues' && props.thumbsValues) this.model.setThumbs(props.thumbsValues);
-  //   });
-  // }
-
   updateThumbValue(index: number, pos: number): number {
-    const modelValues = this.model.getThumbsValues();
+    let modelValues: number[] = [];
+    modelValues = modelValues.concat(this.model.getThumbsValues());
     const convertedPos = this.convertDOMPosToSliderValue(pos);
     const updatedValue = this.model.getClosestValue(convertedPos);
     modelValues[index] = updatedValue;
@@ -71,7 +96,9 @@ class SliderPresenter implements ISliderPresenter {
   convertDOMPosToSliderValue(pos: number): number {
     const length = this.model.getLength();
     const sliderWidth = this.view.getSliderSize();
-    const result = Math.round((this.model.getMin() + ((sliderWidth / 100) * pos) / (sliderWidth / length)) * 100) / 100;
+    const pixelPos = (sliderWidth / 100) * pos;
+    const markPixelLength = sliderWidth / length;
+    const result = Math.round((this.model.getMin() + pixelPos / markPixelLength) * 100) / 100;
 
     return result;
   }
@@ -85,8 +112,10 @@ class SliderPresenter implements ISliderPresenter {
     return percentPos;
   }
 
-  destroy(): void {
+  updateView(): void {
     this.view.destroy();
+    this.view = new SliderView(this);
+    this.view.render(this.target);
   }
 }
 
