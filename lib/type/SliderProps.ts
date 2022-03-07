@@ -11,6 +11,7 @@ type SliderProps = {
   showMarks?: boolean;
   showMinAndMax?: boolean;
   vertical?: boolean;
+  onChange?: (({ values }: { values: number[] }) => void) | null;
 };
 
 export default SliderProps;

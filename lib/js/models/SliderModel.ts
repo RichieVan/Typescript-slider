@@ -27,6 +27,8 @@ class SliderModel implements ISliderModel {
 
   private vertical: boolean;
 
+  private onChange: (({ values }: { values: number[] }) => void) | null;
+
   constructor(props: SliderProps) {
     this.min = props.min || 0;
     this.max = props.max || 10;
@@ -38,27 +40,91 @@ class SliderModel implements ISliderModel {
     this.showMarks = props.showMarks || false;
     this.showMinAndMax = props.showMinAndMax || false;
     this.vertical = props.vertical || false;
+    this.onChange = props.onChange || null;
 
     if (props.thumbsValues && this.range) this.thumbsValues = props.thumbsValues;
     else if (props.thumbsValues) this.thumbsValues = [props.thumbsValues[0]];
     else if (this.range) this.thumbsValues = [this.min, this.max];
     else this.thumbsValues = [this.min];
 
-    if (this.min >= this.max) {
-      throw new Error('Минимальное значение не может быть больше максимального');
-    }
+    this.validate();
+  }
 
-    if (this.step > this.getLength()) {
-      throw new Error('Шаг не может быть больше разницы минимального и максимального значения');
+  setMin(val: number): void {
+    this.min = val;
+    this.setValues(this.calculateValues());
+    const updatedThumbs = this.thumbsValues.map((thumbValue) => {
+      if (thumbValue < this.min) {
+        return this.min;
+      }
+      return this.getClosestValue(thumbValue);
+    });
+    this.setThumbsValues(updatedThumbs);
+  }
+
+  setMax(val: number): void {
+    this.max = val;
+    this.setValues(this.calculateValues());
+    const updatedThumbs = this.thumbsValues.map((thumbValue) => {
+      if (thumbValue > this.max) {
+        return this.max;
+      }
+      return this.getClosestValue(thumbValue);
+    });
+    this.setThumbsValues(updatedThumbs);
+  }
+
+  setStep(val: number): void {
+    this.step = val;
+    this.setValues(this.calculateValues());
+    const updatedThumbs = this.thumbsValues.map((thumbValue) => this.getClosestValue(thumbValue));
+    this.setThumbsValues(updatedThumbs);
+  }
+
+  setSmooth(val: boolean): void {
+    this.smooth = val;
+  }
+
+  setRange(val: boolean): void {
+    this.range = val;
+    if (val === true) {
+      this.thumbsValues = [this.thumbsValues[0], this.max];
+    } else {
+      this.thumbsValues = [this.thumbsValues[0]];
     }
+  }
+
+  setShowThumbValue(val: boolean): void {
+    this.showThumbValue = val;
+  }
+
+  setShowMarks(val: boolean): void {
+    this.showMarks = val;
+  }
+
+  setShowMinAndMax(val: boolean): void {
+    this.showMinAndMax = val;
+  }
+
+  setVertical(val: boolean): void {
+    this.vertical = val;
   }
 
   setThumbsValues(thumbs: number[]): void {
     this.thumbsValues = thumbs;
+    if (this.onChange) this.onChange({ values: this.thumbsValues });
+  }
+
+  setValues(values: number[]): void {
+    this.values = values;
   }
 
   getMin(): number {
     return this.min;
+  }
+
+  getMax(): number {
+    return this.max;
   }
 
   getStep(): number {
@@ -142,6 +208,16 @@ class SliderModel implements ISliderModel {
     values.push(max);
 
     return values;
+  }
+
+  private validate(): void {
+    if (this.min >= this.max) {
+      throw new Error('Минимальное значение не может быть больше максимального');
+    }
+
+    if (this.step > this.getLength()) {
+      throw new Error('Шаг не может быть больше разницы минимального и максимального значения');
+    }
   }
 }
 
