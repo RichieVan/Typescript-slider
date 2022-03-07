@@ -3,6 +3,7 @@ import MarksData from '../../type/MarksData';
 import { SliderModelValues } from '../../type/SliderModel';
 import SliderProps from '../../type/SliderProps';
 import SliderViewProps from '../../type/SliderViewProps';
+import { BeforeRenderCallback, OnChangeCallback } from '../../type/types';
 
 class SliderModel implements ISliderModel {
   private min: number;
@@ -29,6 +30,8 @@ class SliderModel implements ISliderModel {
 
   private onChange: (({ values }: { values: number[] }) => void) | null;
 
+  private beforeRender: BeforeRenderCallback;
+
   constructor(props: SliderProps) {
     this.min = props.min || 0;
     this.max = props.max || 10;
@@ -41,6 +44,7 @@ class SliderModel implements ISliderModel {
     this.showMinAndMax = props.showMinAndMax || false;
     this.vertical = props.vertical || false;
     this.onChange = props.onChange || null;
+    this.beforeRender = props.beforeRender || null;
 
     if (props.thumbsValues && this.range) this.thumbsValues = props.thumbsValues;
     else if (props.thumbsValues) this.thumbsValues = [props.thumbsValues[0]];
@@ -111,12 +115,23 @@ class SliderModel implements ISliderModel {
   }
 
   setThumbsValues(thumbs: number[]): void {
-    this.thumbsValues = thumbs;
-    if (this.onChange) this.onChange({ values: this.thumbsValues });
+    const isThumbChanged = this.thumbsValues[0] !== thumbs[0] || this.thumbsValues[1] !== thumbs[1];
+    if (this.onChange && isThumbChanged) {
+      this.thumbsValues = thumbs;
+      this.onChange({ values: this.thumbsValues });
+    }
   }
 
   setValues(values: number[]): void {
     this.values = values;
+  }
+
+  setOnChangeCallback(callback: OnChangeCallback): void {
+    this.onChange = callback;
+  }
+
+  setBeforeRenderCallback(callback: BeforeRenderCallback): void {
+    this.beforeRender = callback;
   }
 
   getMin(): number {
@@ -149,6 +164,7 @@ class SliderModel implements ISliderModel {
       showMarks: this.showMarks,
       showMinAndMax: this.showMinAndMax,
       vertical: this.vertical,
+      beforeRender: this.beforeRender,
     };
 
     return viewProps;

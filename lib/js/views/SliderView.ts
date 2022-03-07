@@ -134,9 +134,11 @@ class SliderView implements ISliderView {
   }
 
   render(target: JQuery<HTMLElement>): void {
-    target.append(this.container[0]);
+    const { thumbs, beforeRender } = this.presenter.getViewProps();
 
-    const { thumbs } = this.presenter.getViewProps();
+    if (beforeRender) beforeRender();
+
+    target.append(this.container[0]);
     this.thumbs.forEach((thumb, index) => {
       const convertedPos = this.presenter.convertSliderValueToDOMPos(thumbs[index]);
       thumb.setPosition(convertedPos);

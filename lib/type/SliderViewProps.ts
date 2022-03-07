@@ -1,3 +1,5 @@
+import { BeforeRenderCallback } from './types';
+
 type SliderViewProps = {
   smooth: boolean;
   range: boolean;
@@ -6,6 +8,7 @@ type SliderViewProps = {
   showMarks: boolean;
   showMinAndMax: boolean;
   vertical: boolean;
+  beforeRender: BeforeRenderCallback;
 };
 
 export default SliderViewProps;

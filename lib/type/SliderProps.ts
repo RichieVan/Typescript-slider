@@ -1,3 +1,5 @@
+import { BeforeRenderCallback, OnChangeCallback } from './types';
+
 type SliderProps = {
   min?: number;
   max?: number;
@@ -11,7 +13,8 @@ type SliderProps = {
   showMarks?: boolean;
   showMinAndMax?: boolean;
   vertical?: boolean;
-  onChange?: (({ values }: { values: number[] }) => void) | null;
+  onChange?: OnChangeCallback;
+  beforeRender?: BeforeRenderCallback;
 };
 
 export default SliderProps;
