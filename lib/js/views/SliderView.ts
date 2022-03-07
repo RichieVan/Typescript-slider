@@ -29,7 +29,18 @@ class SliderView implements ISliderView {
   ) {
     this.presenter = presenter;
 
-    const { range, thumbs } = presenter.getViewProps();
+    this.container = DOMHelper.createSliderElement();
+    const sliderWrapper = DOMHelper.createWrapperElement();
+
+    const {
+      range,
+      thumbs,
+      showMarks,
+      showThumbValue,
+      showMinAndMax,
+      vertical,
+    } = this.presenter.getViewProps();
+
     if (range) {
       const thumbsList: SliderThumbView[] = [];
       thumbs.forEach((val, index) => {
@@ -41,8 +52,30 @@ class SliderView implements ISliderView {
     }
     this.rangeView = new SliderRangeView(this);
 
-    this.container = DOMHelper.createSliderElement();
-    this.element = this.compile();
+    const sliderControls = DOMHelper.createControlsElement();
+    const sliderRange = this.rangeView.render();
+    const sliderThumbs = this.thumbs.map((thumb: ISliderThumbView) => thumb.getElement());
+
+    this.container.append(sliderWrapper);
+    if (showMarks) {
+      this.marksView = new SliderMarksView(this.presenter.getDivisions(), this);
+      sliderWrapper.append(this.marksView.render());
+    } else if (showMinAndMax) {
+      const marks = this.presenter.getDivisions();
+      const marksData = [marks[0], marks[marks.length - 1]];
+      this.marksView = new SliderMarksView(marksData, this);
+      sliderWrapper.append(this.marksView.render());
+    }
+    sliderWrapper.append(sliderControls);
+    sliderControls.append([sliderRange, ...sliderThumbs]);
+
+    if (showThumbValue && !showMarks && !showMinAndMax) {
+      this.container.addClass(DOMHelper.getEnabledThumbMarksModifierClass());
+    }
+    if (vertical) {
+      this.container.addClass(DOMHelper.getVerticalClass());
+    }
+    this.element = sliderWrapper;
   }
 
   setThumbPosition(thumbIndex: number, pos: number): void {
@@ -100,43 +133,6 @@ class SliderView implements ISliderView {
     this.rangeView.updateProgress();
   }
 
-  compile(): JQuery<HTMLElement> {
-    const sliderWrapper = DOMHelper.createWrapperElement();
-
-    const {
-      showMarks,
-      showThumbValue,
-      showMinAndMax,
-      vertical,
-    } = this.presenter.getViewProps();
-
-    const sliderControls = DOMHelper.createControlsElement();
-    const sliderRange = this.rangeView.render();
-    const sliderThumbs = this.thumbs.map((thumb: ISliderThumbView) => thumb.getElement());
-
-    this.container.append(sliderWrapper);
-    if (showMarks) {
-      this.marksView = new SliderMarksView(this.presenter.getDivisions(), this);
-      sliderWrapper.append(this.marksView.render());
-    } else if (showMinAndMax) {
-      const marks = this.presenter.getDivisions();
-      const marksData = [marks[0], marks[marks.length - 1]];
-      this.marksView = new SliderMarksView(marksData, this);
-      sliderWrapper.append(this.marksView.render());
-    }
-    sliderWrapper.append(sliderControls);
-    sliderControls.append([sliderRange, ...sliderThumbs]);
-
-    if (showThumbValue && !showMarks && !showMinAndMax) {
-      this.container.addClass(DOMHelper.getEnabledThumbMarksModifierClass());
-    }
-    if (vertical) {
-      this.container.addClass(DOMHelper.getVerticalClass());
-    }
-
-    return sliderWrapper;
-  }
-
   render(target: JQuery<HTMLElement>): void {
     target.append(this.container[0]);
 
@@ -149,7 +145,7 @@ class SliderView implements ISliderView {
   }
 
   destroy(): void {
-    this.element.remove();
+    this.container.remove();
   }
 }
 
