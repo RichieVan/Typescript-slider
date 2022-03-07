@@ -11,8 +11,10 @@ const SliderPresenterTests = function () {
   describe('Тесты presenter\'а', () => {
     describe('Конвертирование DOM координат в значения слайдера', () => {
       afterEach(() => {
-        presenter?.destroy();
-        presenter = null;
+        if (presenter) {
+          presenter.view.destroy();
+          presenter = null;
+        }
       });
 
       it('Преобразовать процентную DOM координату 40 в значение слайдера 4', () => {
@@ -108,8 +110,10 @@ const SliderPresenterTests = function () {
 
     describe('Конвертирование значений слайдера в DOM координаты', () => {
       afterEach(() => {
-        presenter?.destroy();
-        presenter = null;
+        if (presenter) {
+          presenter.view.destroy();
+          presenter = null;
+        }
       });
 
       it('Преобразовать значение слайдера 4 в процентную DOM координату 40', () => {
