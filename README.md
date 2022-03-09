@@ -1,1 +1,1 @@
-# tstask
+# Typescript slider
